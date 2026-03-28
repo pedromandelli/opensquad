@@ -37,13 +37,14 @@
     reportEvent('click', { choice: choice, text: text });
   });
 
+  var lastMod;
   setInterval(function() {
     fetch(location.href, { method: 'HEAD' }).then(function(r) {
       var lm = r.headers.get('last-modified');
-      if (lm && window._lastMod && lm !== window._lastMod) {
+      if (lm && lastMod && lm !== lastMod) {
         location.reload();
       }
-      window._lastMod = lm;
+      lastMod = lm;
     }).catch(function() {});
   }, 2000);
 })();

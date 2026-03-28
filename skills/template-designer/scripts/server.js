@@ -5,6 +5,12 @@ import { fileURLToPath } from 'url';
 
 const CONTENT_DIR = process.env.TEMPLATE_DIR;
 const STATE_DIR = process.env.TEMPLATE_STATE_DIR;
+
+if (!CONTENT_DIR || !STATE_DIR) {
+  console.error('Fatal: TEMPLATE_DIR and TEMPLATE_STATE_DIR environment variables must be set.');
+  process.exit(1);
+}
+
 const BIND_HOST = process.env.TEMPLATE_HOST || '127.0.0.1';
 const URL_HOST = process.env.TEMPLATE_URL_HOST || 'localhost';
 const OWNER_PID = parseInt(process.env.TEMPLATE_OWNER_PID || '0', 10);
@@ -45,16 +51,24 @@ const server = http.createServer((req, res) => {
 
   if (req.method === 'POST' && req.url === '/event') {
     let body = '';
-    req.on('data', chunk => { body += chunk; });
+    let size = 0;
+    req.on('data', chunk => {
+      size += chunk.length;
+      if (size > 65536) { req.destroy(); return; }
+      body += chunk;
+    });
     req.on('end', () => {
       try {
+        JSON.parse(body);
         const eventsFile = path.join(STATE_DIR, 'events.jsonl');
         fs.appendFileSync(eventsFile, body.trim() + '\n');
         res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
         res.end('{"ok":true}');
       } catch (e) {
-        res.writeHead(500);
-        res.end('{"error":"' + e.message + '"}');
+        if (!res.headersSent) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: e.message }));
+        }
       }
     });
     return;
