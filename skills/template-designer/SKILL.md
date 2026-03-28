@@ -66,12 +66,32 @@ Tell the user to open the URL in their browser.
 
 ## Generating Templates
 
+### Step 0: Read Design Guidelines (MANDATORY)
+
+Before generating any template, read and internalize the design best practices:
+- `_opensquad/core/best-practices/image-design.md` — **REQUIRED reading**. Contains platform-specific minimum font sizes, typography rules, spacing guidelines, color palette constraints, contrast requirements, and layout methodology. Every template you generate MUST comply with these rules.
+
+Key rules to always follow:
+- **Font sizes**: Hero 58px, Heading 43px, Body 34px, Caption 24px minimum for Instagram carousel (1080x1440). Absolute minimum 20px for any readable text on any platform.
+- **Font weight**: 500 or higher for body text and above.
+- **Colors**: Maximum 5 colors per design system (primary, secondary, accent, background, text).
+- **Contrast**: WCAG AA minimum 4.5:1 for all text against background.
+- **Layout**: CSS Grid or Flexbox only. No absolute positioning for primary content.
+- **Self-contained HTML**: Inline CSS only. Only Google Fonts @import allowed as external resource.
+- **No slide counters**: Never include "1/7" or similar. Instagram has native navigation.
+
+You should also apply general web design best practices: proper white space, visual hierarchy through scale and weight, consistent spacing rhythm, and balanced composition.
+
 ### Step 1: Read Context
 
 Read these files to understand the squad:
 - `squads/{code}/_build/discovery.yaml` — platform, domain, tone, language
 - `squads/{code}/_build/design.yaml` — agents, purpose, skills
 - `squads/{code}/_investigations/consolidated-analysis.md` (if exists) — visual patterns from reference profiles
+- `_opensquad/_memory/company.md` — company name, brand, industry, target audience
+- `_opensquad/_memory/preferences.md` — user preferences (language, style, tone)
+
+Use the company context and user preferences to adapt ALL template content: example text should reflect the company's domain and audience, colors should align with brand if available, and language should match the user's Output Language preference. Never show generic "Lorem ipsum" to the user — always generate contextually relevant example content.
 
 ### Step 2: Read Base Templates
 
@@ -83,11 +103,12 @@ Read the 3 base templates from `skills/template-designer/base-templates/`:
 ### Step 3: Generate Adapted Variations
 
 For each base template, create an adapted version:
-- Adjust colors to match the squad's domain/brand (use Sherlock palette if available)
-- Adjust typography for the target platform
-- Replace example content with domain-relevant content
+- Adjust colors to match the squad's domain/brand (use Sherlock palette if available, company brand colors from company.md if available)
+- Adjust typography following the platform-specific minimum font sizes from `image-design.md`
+- Replace example content with domain-relevant content that reflects the company's industry, audience, and language. Use realistic text that demonstrates how the template would look with actual squad output.
 - Resize viewport if the target is not 1080x1440 (e.g., 1080x1080 for posts, 1080x1920 for stories)
 - Add any visual elements that match the squad's personality
+- Apply proper white space, visual hierarchy, and spacing rhythm per `image-design.md` methodology
 
 Write each adapted template as a **content fragment** (no `<!DOCTYPE>` or `<html>` — the server wraps it in the frame template automatically).
 
