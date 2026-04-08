@@ -18,11 +18,46 @@ Load these files before executing:
 ## Instructions
 
 ### Process
-1. Leia o roteiro e crie um arquivo HTML por slide seguindo o template base e a identidade visual da VascularCare.
-2. Garanta dimensao fixa 1080x1440, legibilidade em mobile, hierarquia de texto clara e consistencia de header/footer em todos os slides.
-3. Salve os HTMLs em `output/slides/slide-01.html` ate `slide-NN.html`.
-4. Inicie um servidor HTTP local e renderize cada slide com Playwright, gerando PNGs equivalentes.
-5. Pare o servidor ao final e retorne uma lista dos arquivos gerados.
+
+1. Leia `squads/carrossel-vascular/output/topic.md` para verificar o campo `estilo:`.
+2. Crie um arquivo `_run.mjs` na pasta de output do run atual com o gerador correto:
+
+**Se `estilo: revista`:**
+```js
+import { generateSlides, screenshotAll } from "/Users/pedromandelli/Documents/Code/opensquad/squads/carrossel-vascular/pipeline/data/generate-slides.mjs";
+import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+const __dir = fileURLToPath(new URL(".", import.meta.url));
+const roteiro = resolve(__dir, "../../roteiro.md");
+const outDir  = resolve(__dir, ".");
+console.log("🎨 Gerando slides — Revista Edition...");
+const files = await generateSlides(roteiro, outDir);
+console.log(`\n✅ ${files.length} HTMLs. Renderizando...\n`);
+await screenshotAll(files);
+console.log("\n✅ Pronto.");
+```
+
+**Se `estilo: pedro-ruiz`:**
+```js
+import { generateSlides, screenshotAll } from "/Users/pedromandelli/Documents/Code/opensquad/squads/carrossel-vascular/pipeline/data/generate-slides-pedro-ruiz.mjs";
+import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+const __dir = fileURLToPath(new URL(".", import.meta.url));
+const roteiro = resolve(__dir, "../../roteiro.md");
+const outDir  = resolve(__dir, ".");
+console.log("🎨 Gerando slides — Pedro Ruiz Edition...");
+const files = await generateSlides(roteiro, outDir);
+console.log(`\n✅ ${files.length} HTMLs. Renderizando...\n`);
+await screenshotAll(files);
+console.log("\n✅ Pronto.");
+```
+
+3. Execute o `_run.mjs` com `node _run.mjs` na pasta de output.
+4. Após a execução, renderize cada PNG via Playwright para verificação visual:
+   - Inicie HTTP server: `python -m http.server 8765 --directory "<output_dir>" &`
+   - Para cada slide: `browser_navigate` → `browser_resize 1080x1440` → `browser_take_screenshot`
+   - Pare o server ao final.
+5. Retorne lista de arquivos gerados.
 
 ## Output Format
 

@@ -11,25 +11,36 @@ outputFile: squads/carrossel-vascular/output/roteiro.md
 ## Context Loading
 
 Load these files before executing:
-- `squads/carrossel-vascular/output/topic.md` — tema escolhido pelo usuario
+- `squads/carrossel-vascular/output/topic.md` — tema e **estilo** escolhidos pelo usuario
 - `squads/carrossel-vascular/pipeline/data/research-brief.md` — contexto de marca e especialidades
 - `squads/carrossel-vascular/pipeline/data/tone-of-voice.md` — opcoes de tom da VascularCare
-- `squads/carrossel-vascular/pipeline/data/template-reference.html` — base visual do carrossel (todos os layouts disponíveis)
-- `squads/carrossel-vascular/pipeline/data/visual-identity.md` — regras de layout e formatação
 - `squads/carrossel-vascular/pipeline/data/quality-criteria.md` — criterios de aceitacao
+
+**Após ler topic.md, carregue os arquivos do estilo correto:**
+
+- Se `estilo: revista`:
+  - `squads/carrossel-vascular/pipeline/data/template-reference.html`
+  - `squads/carrossel-vascular/pipeline/data/visual-identity.md`
+
+- Se `estilo: pedro-ruiz`:
+  - `squads/carrossel-vascular/pipeline/data/visual-identity-pedro-ruiz.md`
 
 ## Instructions
 
 ### Process
-1. Leia o tema e proponha o tom de voz recomendado, apresentando as 6 opcoes do `tone-of-voice.md`; aguarde a escolha do usuario.
-2. Escolha o formato de carrossel mais adequado ao tema (ex.: Editorial, Problema→Solucao), justifique em uma frase e estruture a narrativa completa.
-3. Para cada slide, escolha o layout mais adequado entre: `cover`, `standard`, `statement`, `checklist`, `photo_checklist`, `two_section`.
-4. Use variação de layouts ao longo do carrossel para criar ritmo visual — evite repetir o mesmo layout mais de 3 vezes seguidas.
-5. Escreva o roteiro slide a slide com todos os campos obrigatórios para o layout escolhido (ver Output Format abaixo).
-6. Escreva caption com hook forte nos primeiros 125 caracteres, corpo com line breaks e pergunta final.
-7. Gere 5-15 hashtags mistas (nicho, medio alcance e ampla) e faca auto-revisao final com os criterios de qualidade.
+1. Leia o tema e **o estilo** definidos em `topic.md`.
+2. Proponha o tom de voz recomendado, apresentando as 6 opcoes do `tone-of-voice.md`; aguarde a escolha do usuario.
+3. Escolha o formato de carrossel mais adequado ao tema (ex.: Editorial, Problema→Solucao, Série Numerada), justifique em uma frase.
+4. Para cada slide, escolha o layout correto de acordo com o estilo:
+   - **estilo `revista`**: `cover`, `standard`, `statement`, `checklist`, `photo_checklist`, `two_section`
+   - **estilo `pedro-ruiz`**: `cover`, `editorial`, `numbered`, `white-card`, `white-arc`, `bullet-photo`
+5. Use variação de layouts ao longo do carrossel para criar ritmo visual — evite repetir o mesmo layout mais de 3 vezes seguidas.
+6. Escreva o roteiro slide a slide com todos os campos obrigatórios para o layout escolhido (ver Output Format abaixo — use o formato do estilo correto).
+7. Inclua `estilo: <valor>` no cabeçalho do roteiro.
+8. Escreva caption com hook forte nos primeiros 125 caracteres, corpo com line breaks e pergunta final.
+9. Gere 5-15 hashtags mistas (nicho, medio alcance e ampla) e faca auto-revisao final com os criterios de qualidade.
 
-### Layout Selection Guide
+### Layout Selection Guide — estilo `revista`
 
 | Layout         | Quando usar |
 |----------------|-------------|
@@ -40,15 +51,29 @@ Load these files before executing:
 | `photo_checklist` | Benefícios de tratamento com foto, resultados visuais + takeaways. |
 | `two_section`  | Slides complexos que combinam problema + solução na mesma tela. |
 
+### Layout Selection Guide — estilo `pedro-ruiz`
+
+| Layout         | Quando usar |
+|----------------|-------------|
+| `cover`        | Sempre o slide 1. Foto + headline impactante + CTA pill opcional. |
+| `editorial`    | Slides narrativos com foto. Headline grande + texto de apoio. |
+| `numbered`     | Séries "N erros / sinais / passos". Foto + badge numerado. |
+| `white-card`   | Itens clínicos limpos. Fundo creme + headline dark + foto em card. |
+| `white-arc`    | Transições, reflexões, conclusões. Fundo creme + arcos dourados. Sem foto. |
+| `bullet-photo` | Listas de critérios/benefícios. Foto escura + bullets com ponto dourado. |
+
 ### Inline Bold Formatting
 - Use `**palavra**` dentro de `supporting_text`, `items` e `second_items` para destacar termos-chave.
 - Máximo de 3 termos em negrito por slide.
 
 ## Output Format
 
-The output MUST follow this exact structure (fields vary by layout — include only relevant fields per slide):
+The output MUST follow this exact structure. Include `estilo:` no cabeçalho e use os campos corretos para o estilo escolhido.
+
+### Formato para `estilo: revista`
 
 ```
+estilo: "revista"
 formato: "<nome do formato escolhido>"
 tom: "<tom de voz escolhido>"
 total_slides: <numero>
@@ -111,6 +136,68 @@ slides:
     cta_action: "..."
     background: "dark"
     word_count: <numero>
+
+caption:
+  hook: "..."
+  body: |
+    ...
+  closing_question: "..."
+
+hashtags: "#tag1 #tag2 #tag3 ..."
+```
+
+### Formato para `estilo: pedro-ruiz`
+
+```
+estilo: "pedro-ruiz"
+formato: "<nome do formato escolhido>"
+tom: "<tom de voz escolhido>"
+total_slides: <numero>
+
+slides:
+  - slide: 1
+    tipo: "cover"
+    layout: "cover"
+    category: "VARIZES"          # tag no topo — opcional
+    headline: "Linha 1\nLinha 2"
+    subtitle_italic: "..."       # opcional
+    cta: "Entenda isso"          # opcional — texto do botão pill
+
+  - slide: 2
+    tipo: "editorial"
+    layout: "editorial"
+    headline: "Headline forte aqui."
+    supporting_text: "Texto com **destaques** em negrito."
+
+  - slide: 3
+    tipo: "item"
+    layout: "numbered"
+    number: "1°"
+    badge_label: "SINAL"         # ERRO | SINAL | PASSO | MITO
+    icon: "⚠️"                   # emoji — opcional
+    headline: "Descrição do item\nda série"
+
+  - slide: 4
+    tipo: "item"
+    layout: "white-card"
+    category: "VARIZES"          # opcional
+    headline: "Headline clínico\ncurto e direto"
+
+  - slide: 5
+    tipo: "transicao"
+    layout: "white-arc"
+    headline: "Mas no fim..."
+    subtitle_gold: "existe algo que vale mais\ndo que qualquer dúvida."
+    supporting_text: "O diagnóstico correto. **O tratamento adequado.**"
+
+  - slide: N
+    tipo: "cta"
+    layout: "bullet-photo"
+    headline: "A melhor decisão é aquela\nem que você:"
+    items:
+      - "**Entende** o diagnóstico com clareza"
+      - "Escolhe um **especialista** de referência"
+      - "Age com **segurança**"
 
 caption:
   hook: "..."
