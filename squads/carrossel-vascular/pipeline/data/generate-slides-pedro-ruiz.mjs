@@ -1,25 +1,25 @@
 /**
- * VascularCare Carousel Generator — Pedro Ruiz Edition
+ * VascularCare Carousel Generator — Pedro Ruiz Edition (VascularCare Identity)
  *
  * Layouts disponíveis (campo `layout:` no roteiro):
  *   cover          — foto full-bleed escura, headline grande no topo, CTA pill opcional
  *   editorial      — foto full-bleed, texto no terço superior (slides narrativos/sazonais)
  *   numbered       — foto bg, badge numerado (1°, 2°...), número watermark gigante
  *   white-card     — fundo branco, headline dark, foto em card arredondado
- *   white-arc      — fundo creme, arcos dourados, três pontos, subtítulo gold
- *   bullet-photo   — foto escura, intro text + lista de bullets com ponto dourado
+ *   white-arc      — fundo creme, arcos coral, três pontos, subtítulo coral
+ *   bullet-photo   — foto escura, intro text + lista de bullets com ponto coral
  *   numbered-cover — fundo branco, elemento corner com número, foto central, label highlight
  *   question-cover — foto escura, pergunta no topo, seta central, contra-pergunta abaixo
  *
  * Usage:
  *   node _run.mjs  (via _run.mjs gerado pela Diana)
  *
- * Differences from Revista edition:
- *   - Fonte: Inter (geométrica moderna) ao invés de Montserrat
+ * Visual Identity — VascularCare (vascularcare.com.br):
+ *   - Fonte: Montserrat (fonte oficial da marca VascularCare)
+ *   - Cor acento: Coral #C17C73 (cor do logo VascularCare)
+ *   - CTA pill: Charcoal #424549 (cor do botão CTA do site)
  *   - Fotos em cores reais (sem grayscale)
  *   - Chrome minimalista: seta →, meta text, CRM corners
- *   - Sem header/footer com bordas — só texto pequeno nas margens
- *   - CTA pill em dourado VascularCare (não rosa Pedro Ruiz)
  */
 
 import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
@@ -44,17 +44,18 @@ const BRAND = {
   copyright: "©VASCULARCARE 2026",
 };
 
-// Color palette
+// Color palette — VascularCare brand identity (vascularcare.com.br)
 const C = {
-  dark:     "#0D0D0D",
-  darkCard: "#1A1A1A",
-  white:    "#FFFFFF",
-  cream:    "#F5F1E8",   // warm off-white background (white-arc slides)
-  gold:     "#C4A55A",   // arc decorations & bullet accent
-  goldText: "#BF9B44",   // gold for subtitle text (slightly deeper)
-  goldDeep: "#A8863D",   // CTA pill (VascularCare brand gold — deeper, more authority)
-  text:     "#111111",   // near-black
-  textSub:  "#3A3A3A",   // body text
+  dark:        "#0D0D0D",    // dark photo slides background
+  darkCard:    "#1A1A1A",    // dark card fallback
+  white:       "#FFFFFF",    // white backgrounds
+  cream:       "#F7F3F1",    // warm near-white (white-arc slides) — alinhado com brand
+  coral:       "#C17C73",    // VascularCare primary accent (cor do logo)
+  coralDeep:   "#A8635B",    // coral deeper — arc decorations (mais contraste)
+  coralText:   "#B5665E",    // coral for subtitle text
+  coralCTA:    "#424549",    // VascularCare CTA button charcoal (cor do botão do site)
+  text:        "#111111",    // near-black
+  textSub:     "#424549",    // VascularCare charcoal for body text on light slides
 };
 
 // ─── PHOTO HELPERS ───────────────────────────────────────────────────────────
@@ -98,13 +99,14 @@ function nl2br(text) {
 
 // ─── FONT & BASE ──────────────────────────────────────────────────────────────
 
+// Montserrat — fonte oficial VascularCare (vascularcare.com.br usa Montserrat para headings)
 const FONT_LINK = `
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">`;
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">`;
 
 const BASE_CSS = `
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { width:1080px; height:1440px; overflow:hidden; font-family:'Inter',sans-serif; background:#0d0d0d; }
+  body { width:1080px; height:1440px; overflow:hidden; font-family:'Montserrat',sans-serif; background:#0d0d0d; }
 `;
 
 function wrap(body) {
@@ -156,16 +158,16 @@ function chrome({ dark = true, category = null, brandBottom = false }) {
 
   return `
   <!-- Chrome: top-left, arrow, CRM corners -->
-  <div style="position:absolute;top:46px;left:60px;z-index:20;font-family:'Inter',sans-serif;">
+  <div style="position:absolute;top:46px;left:60px;z-index:20;font-family:'Montserrat',sans-serif;">
     ${topLeftContent}
   </div>
   <div style="position:absolute;top:42px;right:60px;z-index:20;
-    font-family:'Inter',sans-serif;font-size:22px;font-weight:300;
+    font-family:'Montserrat',sans-serif;font-size:22px;font-weight:300;
     color:${alphaPrimary};letter-spacing:-1px;line-height:1;">→</div>
-  <div style="position:absolute;bottom:42px;left:60px;z-index:20;font-family:'Inter',sans-serif;">
+  <div style="position:absolute;bottom:42px;left:60px;z-index:20;font-family:'Montserrat',sans-serif;">
     ${bottomLeftContent}
   </div>
-  <div style="position:absolute;bottom:42px;right:60px;z-index:20;font-family:'Inter',sans-serif;text-align:right;">
+  <div style="position:absolute;bottom:42px;right:60px;z-index:20;font-family:'Montserrat',sans-serif;text-align:right;">
     ${bottomRightContent}
   </div>`;
 }
@@ -174,16 +176,17 @@ function chrome({ dark = true, category = null, brandBottom = false }) {
 // Three golden circles positioned mostly off-screen to the right.
 // Only the left arc portion is visible — creates the signature curved line effect.
 
+// Arc decorations — VascularCare coral (193,124,115 = #C17C73)
 function arcDecorations() {
   return `
   <div style="position:absolute;right:-270px;top:100px;width:580px;height:580px;
-    border-radius:50%;border:1.5px solid rgba(196,165,90,0.55);
+    border-radius:50%;border:1.5px solid rgba(193,124,115,0.55);
     pointer-events:none;z-index:1;"></div>
   <div style="position:absolute;right:-250px;top:420px;width:520px;height:520px;
-    border-radius:50%;border:1.5px solid rgba(196,165,90,0.38);
+    border-radius:50%;border:1.5px solid rgba(193,124,115,0.38);
     pointer-events:none;z-index:1;"></div>
   <div style="position:absolute;right:-230px;top:720px;width:460px;height:460px;
-    border-radius:50%;border:1.5px solid rgba(196,165,90,0.22);
+    border-radius:50%;border:1.5px solid rgba(193,124,115,0.22);
     pointer-events:none;z-index:1;"></div>`;
 }
 
@@ -223,14 +226,14 @@ function coverSlide(slide, photo) {
     background:linear-gradient(to top,rgba(0,0,0,0.85) 45%,rgba(0,0,0,0.45) 75%,transparent 100%);
     z-index:2;pointer-events:none;"></div>`;
 
-  // CTA pill — VascularCare brand gold (não rosa Pedro Ruiz)
+  // CTA pill — VascularCare brand charcoal (cor do botão CTA do site)
   const ctaPill = cta
     ? `<div style="margin-top:48px;">
          <span style="display:inline-block;
-           background:${C.goldDeep};color:#fff;
-           font-family:'Inter',sans-serif;font-size:34px;font-weight:600;
-           padding:20px 56px;border-radius:64px;letter-spacing:0.3px;
-           box-shadow:0 4px 28px rgba(168,134,61,0.45);">${cta}</span>
+           background:${C.coralCTA};color:#fff;
+           font-family:'Montserrat',sans-serif;font-size:34px;font-weight:600;
+           padding:20px 56px;border-radius:64px;letter-spacing:0.5px;
+           box-shadow:0 4px 28px rgba(66,69,73,0.45);">${cta}</span>
        </div>`
     : "";
 
@@ -243,12 +246,12 @@ function coverSlide(slide, photo) {
 
   <!-- Headline block — positioned upper-left, within dark zone -->
   <div style="position:absolute;top:168px;left:60px;right:80px;z-index:10;">
-    <h1 style="font-family:'Inter',sans-serif;font-size:96px;font-weight:900;
+    <h1 style="font-family:'Montserrat',sans-serif;font-size:96px;font-weight:900;
       color:#fff;line-height:1.0;letter-spacing:-3px;">
       ${nl2br(headline)}
     </h1>
     ${subtitleItal
-      ? `<p style="margin-top:22px;font-family:'Inter',sans-serif;font-size:40px;
+      ? `<p style="margin-top:22px;font-family:'Montserrat',sans-serif;font-size:40px;
            font-weight:300;font-style:italic;color:rgba(255,255,255,0.78);
            line-height:1.2;letter-spacing:0.2px;">${nl2br(subtitleItal)}</p>`
       : ""}
@@ -290,12 +293,12 @@ function editorialSlide(slide, photo) {
 
   <!-- Text block: upper portion — starts around y:130, matches Pedro Ruiz refs -->
   <div style="position:absolute;top:130px;left:60px;right:100px;z-index:10;">
-    <h1 style="font-family:'Inter',sans-serif;font-size:84px;font-weight:800;
+    <h1 style="font-family:'Montserrat',sans-serif;font-size:84px;font-weight:800;
       color:#fff;line-height:1.0;letter-spacing:-2.5px;">
       ${nl2br(headline)}
     </h1>
     ${bodyText
-      ? `<p style="margin-top:40px;font-family:'Inter',sans-serif;font-size:34px;
+      ? `<p style="margin-top:40px;font-family:'Montserrat',sans-serif;font-size:34px;
            font-weight:400;color:rgba(255,255,255,0.86);line-height:1.58;">
            ${parseBold(bodyText, "#FFFFFF")}
          </p>`
@@ -341,7 +344,7 @@ function numberedSlide(slide, photo) {
 
   <!-- Watermark: huge translucent digit, bottom-right -->
   <div style="position:absolute;bottom:-80px;right:-30px;z-index:3;
-    font-family:'Inter',sans-serif;font-size:560px;font-weight:900;
+    font-family:'Montserrat',sans-serif;font-size:560px;font-weight:900;
     color:rgba(255,255,255,0.055);line-height:1;letter-spacing:-16px;
     user-select:none;pointer-events:none;white-space:nowrap;">${digit}</div>
 
@@ -349,16 +352,16 @@ function numberedSlide(slide, photo) {
   <div style="position:absolute;top:128px;left:60px;z-index:10;
     display:flex;align-items:center;gap:18px;">
     ${icon ? `<span style="font-size:64px;line-height:1;filter:brightness(0) invert(1);">${icon}</span>` : ""}
-    <span style="font-family:'Inter',sans-serif;font-size:100px;font-weight:900;
+    <span style="font-family:'Montserrat',sans-serif;font-size:100px;font-weight:900;
       color:#fff;line-height:1;letter-spacing:-3px;">${number}</span>
-    <span style="font-family:'Inter',sans-serif;font-size:46px;font-weight:700;
+    <span style="font-family:'Montserrat',sans-serif;font-size:46px;font-weight:700;
       color:#fff;line-height:1;letter-spacing:1.5px;text-transform:uppercase;
       margin-top:20px;">${badgeLabel}</span>
   </div>
 
   <!-- Main headline: lower portion of slide -->
   <div style="position:absolute;bottom:108px;left:60px;right:120px;z-index:10;">
-    <h2 style="font-family:'Inter',sans-serif;font-size:64px;font-weight:700;
+    <h2 style="font-family:'Montserrat',sans-serif;font-size:64px;font-weight:700;
       color:#fff;line-height:1.08;letter-spacing:-1.2px;">
       ${nl2br(headline)}
     </h2>
@@ -390,7 +393,7 @@ function whiteCardSlide(slide, photo) {
 
   <!-- Headline: positioned upper area, dark text -->
   <h1 style="position:absolute;top:128px;left:60px;right:80px;z-index:10;
-    font-family:'Inter',sans-serif;font-size:66px;font-weight:700;
+    font-family:'Montserrat',sans-serif;font-size:66px;font-weight:700;
     color:${C.text};line-height:1.05;letter-spacing:-1.5px;">
     ${nl2br(headline)}
   </h1>
@@ -412,17 +415,17 @@ function whiteArcSlide(slide) {
   const subtitleGold = slide.subtitle_gold || "";
   const bodyText     = slide.supporting_text || "";
 
-  // Three dots opener
+  // Three dots opener — coral VascularCare
   const dotsRow = `
   <div style="display:flex;gap:10px;margin-bottom:30px;">
-    <div style="width:13px;height:13px;border-radius:50%;background:${C.text};opacity:0.80;"></div>
-    <div style="width:13px;height:13px;border-radius:50%;background:${C.text};opacity:0.80;"></div>
-    <div style="width:13px;height:13px;border-radius:50%;background:${C.text};opacity:0.80;"></div>
+    <div style="width:13px;height:13px;border-radius:50%;background:${C.coral};opacity:0.90;"></div>
+    <div style="width:13px;height:13px;border-radius:50%;background:${C.coral};opacity:0.90;"></div>
+    <div style="width:13px;height:13px;border-radius:50%;background:${C.coral};opacity:0.90;"></div>
   </div>`;
 
-  // Short separator line between subtitle and body
+  // Short separator line between subtitle and body — coral VascularCare
   const separator = bodyText
-    ? `<div style="width:44px;height:2px;background:rgba(0,0,0,0.22);margin:30px 0;"></div>`
+    ? `<div style="width:44px;height:2px;background:${C.coral};opacity:0.40;margin:30px 0;"></div>`
     : "";
 
   return wrap(`
@@ -434,14 +437,14 @@ function whiteArcSlide(slide) {
   <div style="position:absolute;top:252px;left:60px;right:170px;z-index:10;">
     ${dotsRow}
 
-    <h1 style="font-family:'Inter',sans-serif;font-size:72px;font-weight:700;
+    <h1 style="font-family:'Montserrat',sans-serif;font-size:72px;font-weight:700;
       color:${C.text};line-height:1.04;letter-spacing:-1.8px;">
       ${nl2br(headline)}
     </h1>
 
     ${subtitleGold
-      ? `<h2 style="margin-top:18px;font-family:'Inter',sans-serif;font-size:52px;
-           font-weight:600;color:${C.goldText};line-height:1.1;letter-spacing:-1px;">
+      ? `<h2 style="margin-top:18px;font-family:'Montserrat',sans-serif;font-size:52px;
+           font-weight:600;color:${C.coralText};line-height:1.1;letter-spacing:-0.5px;">
            ${nl2br(subtitleGold)}
          </h2>`
       : ""}
@@ -449,7 +452,7 @@ function whiteArcSlide(slide) {
     ${separator}
 
     ${bodyText
-      ? `<p style="font-family:'Inter',sans-serif;font-size:34px;font-weight:400;
+      ? `<p style="font-family:'Montserrat',sans-serif;font-size:34px;font-weight:400;
            color:${C.textSub};line-height:1.55;">
            ${parseBold(bodyText, C.text)}
          </p>`
@@ -481,9 +484,9 @@ function bulletPhotoSlide(slide, photo) {
     .map(
       (item) => `
     <li style="display:flex;align-items:flex-start;gap:22px;margin-bottom:20px;">
-      <span style="color:${C.gold};font-size:30px;line-height:1.4;
+      <span style="color:${C.coral};font-size:30px;line-height:1.4;
         flex-shrink:0;margin-top:4px;">•</span>
-      <span style="font-family:'Inter',sans-serif;font-size:34px;font-weight:400;
+      <span style="font-family:'Montserrat',sans-serif;font-size:34px;font-weight:400;
         color:rgba(255,255,255,0.88);line-height:1.38;">
         ${parseBold(item, "#FFFFFF")}
       </span>
@@ -499,7 +502,7 @@ function bulletPhotoSlide(slide, photo) {
 
   <!-- Text block -->
   <div style="position:absolute;top:256px;left:60px;right:80px;z-index:10;">
-    <h2 style="font-family:'Inter',sans-serif;font-size:54px;font-weight:600;
+    <h2 style="font-family:'Montserrat',sans-serif;font-size:54px;font-weight:600;
       color:#fff;line-height:1.1;letter-spacing:-0.8px;margin-bottom:48px;">
       ${nl2br(headline)}
     </h2>
@@ -527,15 +530,15 @@ function numberedCoverSlide(slide, photo) {
   // Strip ordinal for watermark
   const digit = number.replace(/[^0-9]/g, "") || "5";
 
-  // Gold corner block: bleeds off top-left corner
+  // Coral corner block: bleeds off top-left corner — VascularCare brand
   const cornerBlock = `
   <div style="position:absolute;top:-24px;left:-24px;width:430px;
-    background:${C.gold};border-radius:0 0 32px 0;padding:56px 44px 40px 52px;
+    background:${C.coral};border-radius:0 0 32px 0;padding:56px 44px 40px 52px;
     z-index:10;">
     <div style="display:flex;align-items:baseline;gap:12px;">
-      <span style="font-family:'Inter',sans-serif;font-size:120px;font-weight:900;
+      <span style="font-family:'Montserrat',sans-serif;font-size:120px;font-weight:900;
         color:#fff;line-height:1;letter-spacing:-4px;">${digit}</span>
-      <span style="font-family:'Inter',sans-serif;font-size:38px;font-weight:700;
+      <span style="font-family:'Montserrat',sans-serif;font-size:38px;font-weight:700;
         color:rgba(255,255,255,0.90);line-height:1.1;text-transform:uppercase;
         letter-spacing:1px;max-width:200px;">${badgeLabel}</span>
     </div>
@@ -552,18 +555,18 @@ function numberedCoverSlide(slide, photo) {
     : `<div style="position:absolute;top:280px;left:100px;right:60px;height:720px;
          border-radius:20px;background:#E8E4DC;"></div>`;
 
-  // Watermark digit — light gold, bottom-right
+  // Watermark digit — light coral, bottom-right
   const watermark = `
   <div style="position:absolute;bottom:-60px;right:-10px;z-index:2;
-    font-family:'Inter',sans-serif;font-size:500px;font-weight:900;
-    color:rgba(196,165,90,0.10);line-height:1;letter-spacing:-14px;
+    font-family:'Montserrat',sans-serif;font-size:500px;font-weight:900;
+    color:rgba(193,124,115,0.10);line-height:1;letter-spacing:-14px;
     user-select:none;pointer-events:none;">${digit}</div>`;
 
-  // Highlight label: gold background bar with text
+  // Highlight label: coral background bar — VascularCare brand
   const highlightBar = highlightText
-    ? `<div style="display:inline-block;background:${C.gold};
+    ? `<div style="display:inline-block;background:${C.coral};
          padding:12px 32px;border-radius:6px;margin-bottom:18px;">
-         <span style="font-family:'Inter',sans-serif;font-size:44px;font-weight:900;
+         <span style="font-family:'Montserrat',sans-serif;font-size:44px;font-weight:900;
            color:#fff;text-transform:uppercase;letter-spacing:1px;">${highlightText}</span>
        </div>`
     : "";
@@ -580,7 +583,7 @@ function numberedCoverSlide(slide, photo) {
   <div style="position:absolute;bottom:100px;left:60px;right:60px;z-index:10;">
     ${highlightBar}
     ${headline
-      ? `<h2 style="font-family:'Inter',sans-serif;font-size:52px;font-weight:700;
+      ? `<h2 style="font-family:'Montserrat',sans-serif;font-size:52px;font-weight:700;
            color:${C.text};line-height:1.1;letter-spacing:-1px;">
            ${nl2br(headline)}
          </h2>`
@@ -619,15 +622,15 @@ function questionCoverSlide(slide, photo) {
     background:linear-gradient(to top,rgba(0,0,0,0.80) 40%,transparent 100%);
     z-index:2;pointer-events:none;"></div>`;
 
-  // Center divider: gold line + arrow
+  // Center divider: coral line + arrow — VascularCare brand
   const divider = `
   <div style="position:absolute;top:50%;left:60px;right:60px;
     transform:translateY(-50%);z-index:10;
     display:flex;align-items:center;gap:24px;">
-    <div style="flex:1;height:1px;background:rgba(196,165,90,0.50);"></div>
-    <span style="font-family:'Inter',sans-serif;font-size:32px;font-weight:300;
-      color:${C.gold};letter-spacing:2px;">→</span>
-    <div style="flex:1;height:1px;background:rgba(196,165,90,0.50);"></div>
+    <div style="flex:1;height:1px;background:rgba(193,124,115,0.50);"></div>
+    <span style="font-family:'Montserrat',sans-serif;font-size:32px;font-weight:300;
+      color:${C.coral};letter-spacing:2px;">→</span>
+    <div style="flex:1;height:1px;background:rgba(193,124,115,0.50);"></div>
   </div>`;
 
   return wrap(`
@@ -640,7 +643,7 @@ function questionCoverSlide(slide, photo) {
 
   <!-- Question: upper block, centered -->
   <div style="position:absolute;top:130px;left:60px;right:60px;z-index:10;text-align:center;">
-    <h1 style="font-family:'Inter',sans-serif;font-size:74px;font-weight:800;
+    <h1 style="font-family:'Montserrat',sans-serif;font-size:74px;font-weight:800;
       color:#fff;line-height:1.02;letter-spacing:-2px;">
       ${nl2br(headline)}
     </h1>
@@ -649,7 +652,7 @@ function questionCoverSlide(slide, photo) {
   <!-- Counter-question: lower block, centered -->
   ${counterQ
     ? `<div style="position:absolute;bottom:100px;left:60px;right:60px;z-index:10;text-align:center;">
-         <p style="font-family:'Inter',sans-serif;font-size:54px;font-weight:600;
+         <p style="font-family:'Montserrat',sans-serif;font-size:54px;font-weight:600;
            color:rgba(255,255,255,0.88);line-height:1.1;letter-spacing:-1px;font-style:italic;">
            ${nl2br(counterQ)}
          </p>
@@ -812,7 +815,7 @@ export async function screenshotAll(htmlFiles) {
   for (const { html: htmlPath, png: pngPath } of htmlFiles) {
     await page.goto("file://" + htmlPath);
     await page.waitForLoadState("networkidle").catch(() => {});
-    await page.waitForTimeout(800); // extra wait for Inter font loading
+    await page.waitForTimeout(800); // extra wait for Montserrat font loading
     await page.screenshot({ path: pngPath, fullPage: false });
     console.log(`  📸 ${pngPath.split("/").pop()}`);
   }
