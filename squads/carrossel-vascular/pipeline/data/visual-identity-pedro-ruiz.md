@@ -20,8 +20,8 @@ Estilo editorial moderno inspirado no Instituto Pedro Ruiz. Minimalista, foto-ce
 | `goldText` | `#BF9B44` | Subtítulo dourado (white-arc) |
 | `text` | `#111111` | Texto escuro (slides claros) |
 | `textSub` | `#3A3A3A` | Corpo secundário (slides claros) |
-| `pink` | `#E84070` | Botão CTA pill (cover) |
-| `white` | `#FFFFFF` | Texto em fundos escuros/foto |
+| `goldDeep` | `#A8863D` | Botão CTA pill (cover) — dourado VascularCare |
+| `white` | `#FFFFFF` | Texto em fundos escuros/foto, fundo white-card |
 
 ## Chrome Elements (presentes em TODOS os slides)
 
@@ -88,11 +88,11 @@ Estilo editorial moderno inspirado no Instituto Pedro Ruiz. Minimalista, foto-ce
 **Quando usar:** Itens de lista simples, erros/critérios com foto ilustrativa. Tom mais clínico.
 
 **Campos obrigatórios:**
-- `headline:` — título dark, Inter 700, ~66px, fundo creme
+- `headline:` — título dark, Inter 700, ~66px
 - `category:` (opcional) — tag de categoria no topo ("BLEFAROPLASTIA", "VARIZES")
 - Foto auto-atribuída — aparece em card arredondado (border-radius 18px) abaixo do headline
 
-**Visual:** Fundo creme #F5F1E8, sem foto no background — só no card.
+**Visual:** Fundo **branco puro** `#FFFFFF` (não creme), sem foto no background — só no card.
 
 ---
 
@@ -120,20 +120,56 @@ Estilo editorial moderno inspirado no Instituto Pedro Ruiz. Minimalista, foto-ce
 
 ---
 
+### `numbered-cover`
+**Quando usar:** Capa para séries numeradas ("5 sinais", "3 erros"). Alternativa ao `cover` escuro — tom mais editorial, visual mais clean.
+
+**Campos obrigatórios:**
+- `number:` — número principal ("5", "3", "7" — sem grau)
+- `badge_label:` — texto ao lado do número ("SINAIS", "ERROS", "MITOS")
+- `highlight_text:` — palavra(s) em destaque no label dourado inferior ("IGNORADOS", "QUE PIORAM")
+- `headline:` — frase abaixo do label ("pela maioria das pacientes")
+
+**Campos opcionais:**
+- Foto auto-atribuída (portrait do Dr. Marcelo ou procedimento)
+
+**Visual:** Fundo **branco puro**, elemento corner dourado top-left com número gigante + badge_label. Foto central em card arredondado. Label dourado + headline na área inferior. Watermark do número em ouro transparente (opacity 0.10) no canto inferior direito.
+
+---
+
+### `question-cover`
+**Quando usar:** Capa com pergunta provocativa + contra-pergunta. Ideal para quebrar crenças ou mitos. Cria tensão narrativa forte.
+
+**Campos obrigatórios:**
+- `headline:` — pergunta principal no topo (Inter 800, ~74px, branco, centralizada)
+- `counter_question:` — resposta/contra-pergunta embaixo (Inter 600, ~54px, itálico, branco 88%)
+
+**Campos opcionais:**
+- `category:` — tag no topo-esquerdo
+- Foto auto-atribuída (cirurgia, procedimento, Dr. Marcelo)
+
+**Visual:** Foto full-bleed muito escurecida. Pergunta no topo, linha dourada + seta → no centro, contra-pergunta no inferior.
+
+---
+
 ## Narrativa e ritmo visual
 
 Para manter variedade ao longo do carrossel, alterne entre:
 - Slides foto-escuros (`cover`, `editorial`, `numbered`, `bullet-photo`)
 - Slides claros (`white-card`, `white-arc`)
 
-**Sequência recomendada (7–8 slides):**
+**Sequência padrão (7–8 slides):**
 ```
 cover → editorial → numbered (x2-3) → white-arc → white-card → editorial (CTA)
 ```
 
-**Ou série numerada (6–7 slides):**
+**Série numerada com capa limpa (6–7 slides):**
 ```
-cover (com CTA pill) → numbered (x4-5) → white-arc (conclusão)
+numbered-cover → numbered (x4-5) → white-arc (conclusão)
+```
+
+**Carrossel provocativo/mito (8–9 slides):**
+```
+question-cover → editorial (x2-3) → white-arc → bullet-photo → white-arc (CTA)
 ```
 
 ## Campos do roteiro para estilo pedro-ruiz
@@ -189,6 +225,22 @@ slides:
       - "Escolhe um **especialista** de referência"
       - "Age com calma e **segurança**"
 
+  # Alternativas de capa:
+  - slide: 1
+    tipo: "cover"
+    layout: "numbered-cover"
+    number: "5"
+    badge_label: "SINAIS"
+    highlight_text: "IGNORADOS"
+    headline: "pela maioria das pacientes"
+
+  - slide: 1
+    tipo: "cover"
+    layout: "question-cover"
+    category: "SAÚDE VASCULAR"
+    headline: "Existe mesmo uma época certa\npara tratar as varizes?"
+    counter_question: "Ou isso é só um mito\nque você acredita há anos?"
+
 caption:
   hook: "..."
   body: |
@@ -203,8 +255,10 @@ hashtags: "#tag1 #tag2 ..."
 | Layout | Limite orientativo |
 |--------|--------------------|
 | `cover` | headline 4–10 palavras; subtitle 5–10 |
-| `editorial` | headline 6–12 palavras; body 20–50 palavras |
+| `editorial` | headline 4–10 palavras; body 20–50 palavras |
 | `numbered` | headline 5–10 palavras |
 | `white-card` | headline 4–10 palavras |
 | `white-arc` | headline 3–8; subtitle_gold 5–12; body 15–45 |
 | `bullet-photo` | headline 8–15; cada bullet 4–10 palavras |
+| `numbered-cover` | number 1–2 dígitos; badge_label 1–2 palavras; highlight_text 1–2 palavras; headline 5–10 |
+| `question-cover` | headline 8–14 palavras; counter_question 6–12 palavras |

@@ -2,12 +2,14 @@
  * VascularCare Carousel Generator — Pedro Ruiz Edition
  *
  * Layouts disponíveis (campo `layout:` no roteiro):
- *   cover        — foto full-bleed escura, headline grande no topo, CTA pill opcional
- *   editorial    — foto com gradiente, texto à esquerda (slides narrativos/sazonais)
- *   numbered     — foto bg, badge numerado (1°, 2°...), número watermark gigante
- *   white-card   — fundo creme, headline dark, foto em card arredondado
- *   white-arc    — fundo creme, arcos dourados, três pontos, subtítulo gold
- *   bullet-photo — foto escura, intro text + lista de bullets com ponto dourado
+ *   cover          — foto full-bleed escura, headline grande no topo, CTA pill opcional
+ *   editorial      — foto full-bleed, texto no terço superior (slides narrativos/sazonais)
+ *   numbered       — foto bg, badge numerado (1°, 2°...), número watermark gigante
+ *   white-card     — fundo branco, headline dark, foto em card arredondado
+ *   white-arc      — fundo creme, arcos dourados, três pontos, subtítulo gold
+ *   bullet-photo   — foto escura, intro text + lista de bullets com ponto dourado
+ *   numbered-cover — fundo branco, elemento corner com número, foto central, label highlight
+ *   question-cover — foto escura, pergunta no topo, seta central, contra-pergunta abaixo
  *
  * Usage:
  *   node _run.mjs  (via _run.mjs gerado pela Diana)
@@ -17,6 +19,7 @@
  *   - Fotos em cores reais (sem grayscale)
  *   - Chrome minimalista: seta →, meta text, CRM corners
  *   - Sem header/footer com bordas — só texto pequeno nas margens
+ *   - CTA pill em dourado VascularCare (não rosa Pedro Ruiz)
  */
 
 import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
@@ -46,12 +49,12 @@ const C = {
   dark:     "#0D0D0D",
   darkCard: "#1A1A1A",
   white:    "#FFFFFF",
-  cream:    "#F5F1E8",   // warm off-white background
+  cream:    "#F5F1E8",   // warm off-white background (white-arc slides)
   gold:     "#C4A55A",   // arc decorations & bullet accent
   goldText: "#BF9B44",   // gold for subtitle text (slightly deeper)
+  goldDeep: "#A8863D",   // CTA pill (VascularCare brand gold — deeper, more authority)
   text:     "#111111",   // near-black
   textSub:  "#3A3A3A",   // body text
-  pink:     "#E84070",   // CTA pill
 };
 
 // ─── PHOTO HELPERS ───────────────────────────────────────────────────────────
@@ -220,14 +223,14 @@ function coverSlide(slide, photo) {
     background:linear-gradient(to top,rgba(0,0,0,0.85) 45%,rgba(0,0,0,0.45) 75%,transparent 100%);
     z-index:2;pointer-events:none;"></div>`;
 
-  // CTA pill
+  // CTA pill — VascularCare brand gold (não rosa Pedro Ruiz)
   const ctaPill = cta
     ? `<div style="margin-top:48px;">
          <span style="display:inline-block;
-           background:${C.pink};color:#fff;
+           background:${C.goldDeep};color:#fff;
            font-family:'Inter',sans-serif;font-size:34px;font-weight:600;
            padding:20px 56px;border-radius:64px;letter-spacing:0.3px;
-           box-shadow:0 4px 24px rgba(232,64,112,0.40);">${cta}</span>
+           box-shadow:0 4px 28px rgba(168,134,61,0.45);">${cta}</span>
        </div>`
     : "";
 
@@ -255,8 +258,9 @@ function coverSlide(slide, photo) {
 }
 
 // ─── LAYOUT 2: EDITORIAL ─────────────────────────────────────────────────────
-// Full photo with dark gradient. Text left-aligned in lower half.
-// Pattern: "A decisão não começa no calendário" / seasonal series
+// Full photo with dark gradient. Text left-aligned in UPPER portion.
+// Pattern: "Outono é clareza." / "A decisão não começa no calendário" / seasonal series
+// Note: Pedro Ruiz puts text in the UPPER third, not the lower half.
 
 function editorialSlide(slide, photo) {
   const headline = slide.headline || "";
@@ -265,34 +269,34 @@ function editorialSlide(slide, photo) {
   const photoBlock = photo
     ? `<img src="${fileToDataURL(photo)}"
          style="position:absolute;inset:0;width:100%;height:100%;
-                object-fit:cover;filter:brightness(0.80);z-index:1;display:block;">`
+                object-fit:cover;filter:brightness(0.72);z-index:1;display:block;">`
     : `<div style="position:absolute;inset:0;background:#1e2530;z-index:1;"></div>`;
 
-  // Dense gradient — covers bottom 70% for text area
-  const gradBottom = `<div style="position:absolute;bottom:0;left:0;right:0;height:70%;
-    background:linear-gradient(to top,rgba(0,0,0,0.92) 40%,rgba(0,0,0,0.55) 70%,transparent 100%);
+  // Full overlay — tinted darker on left side for text readability
+  const overlay = `<div style="position:absolute;inset:0;
+    background:linear-gradient(105deg,rgba(0,0,0,0.62) 0%,rgba(0,0,0,0.20) 60%,rgba(0,0,0,0.10) 100%);
     z-index:2;pointer-events:none;"></div>`;
 
-  const gradTop = `<div style="position:absolute;top:0;left:0;right:0;height:180px;
-    background:linear-gradient(to bottom,rgba(0,0,0,0.58) 0%,transparent 100%);
+  const gradTop = `<div style="position:absolute;top:0;left:0;right:0;height:200px;
+    background:linear-gradient(to bottom,rgba(0,0,0,0.55) 0%,transparent 100%);
     z-index:2;pointer-events:none;"></div>`;
 
   return wrap(`
 <div style="position:relative;width:1080px;height:1440px;overflow:hidden;background:${C.dark};">
   ${photoBlock}
-  ${gradBottom}
+  ${overlay}
   ${gradTop}
   ${chrome({ dark: true })}
 
-  <!-- Text block: positioned in the dark gradient zone (lower 55%) -->
-  <div style="position:absolute;top:580px;left:60px;right:80px;z-index:10;">
-    <h1 style="font-family:'Inter',sans-serif;font-size:80px;font-weight:800;
-      color:#fff;line-height:1.02;letter-spacing:-2px;">
+  <!-- Text block: upper portion — starts around y:130, matches Pedro Ruiz refs -->
+  <div style="position:absolute;top:130px;left:60px;right:100px;z-index:10;">
+    <h1 style="font-family:'Inter',sans-serif;font-size:84px;font-weight:800;
+      color:#fff;line-height:1.0;letter-spacing:-2.5px;">
       ${nl2br(headline)}
     </h1>
     ${bodyText
-      ? `<p style="margin-top:32px;font-family:'Inter',sans-serif;font-size:34px;
-           font-weight:400;color:rgba(255,255,255,0.85);line-height:1.55;">
+      ? `<p style="margin-top:40px;font-family:'Inter',sans-serif;font-size:34px;
+           font-weight:400;color:rgba(255,255,255,0.86);line-height:1.58;">
            ${parseBold(bodyText, "#FFFFFF")}
          </p>`
       : ""}
@@ -363,8 +367,9 @@ function numberedSlide(slide, photo) {
 }
 
 // ─── LAYOUT 4: WHITE-CARD ────────────────────────────────────────────────────
-// Warm cream background, bold dark headline, photo in rounded card below.
+// Pure white background, bold dark headline, photo in rounded card below.
 // Pattern: Blefaroplastia content slides ("Escolher só pelo preço")
+// Note: Pedro Ruiz usa branco puro (#FFFFFF) nestas slides, não creme.
 
 function whiteCardSlide(slide, photo) {
   const headline = slide.headline || "";
@@ -380,7 +385,7 @@ function whiteCardSlide(slide, photo) {
          background:#E2DDD6;box-shadow:0 4px 32px rgba(0,0,0,0.08);"></div>`;
 
   return wrap(`
-<div style="position:relative;width:1080px;height:1440px;overflow:hidden;background:${C.cream};">
+<div style="position:relative;width:1080px;height:1440px;overflow:hidden;background:${C.white};">
   ${chrome({ dark: false, category: slide.category || null, brandBottom: true })}
 
   <!-- Headline: positioned upper area, dark text -->
@@ -505,17 +510,167 @@ function bulletPhotoSlide(slide, photo) {
 </div>`);
 }
 
+// ─── LAYOUT 7: NUMBERED-COVER ────────────────────────────────────────────────
+// White background, gold corner element with number + badge_label,
+// person photo positioned center (not full-bleed), gold highlight label,
+// headline below, light gold watermark digit bottom-right.
+// Pattern: "5 erros simples" cover (ref-06) — adaptado para VascularCare.
+//
+// Roteiro fields: number, badge_label, headline, highlight_text, photo
+
+function numberedCoverSlide(slide, photo) {
+  const number        = slide.number     || "5";
+  const badgeLabel    = slide.badge_label || "SINAIS";
+  const headline      = slide.headline   || "";
+  const highlightText = slide.highlight_text || "";
+
+  // Strip ordinal for watermark
+  const digit = number.replace(/[^0-9]/g, "") || "5";
+
+  // Gold corner block: bleeds off top-left corner
+  const cornerBlock = `
+  <div style="position:absolute;top:-24px;left:-24px;width:430px;
+    background:${C.gold};border-radius:0 0 32px 0;padding:56px 44px 40px 52px;
+    z-index:10;">
+    <div style="display:flex;align-items:baseline;gap:12px;">
+      <span style="font-family:'Inter',sans-serif;font-size:120px;font-weight:900;
+        color:#fff;line-height:1;letter-spacing:-4px;">${digit}</span>
+      <span style="font-family:'Inter',sans-serif;font-size:38px;font-weight:700;
+        color:rgba(255,255,255,0.90);line-height:1.1;text-transform:uppercase;
+        letter-spacing:1px;max-width:200px;">${badgeLabel}</span>
+    </div>
+  </div>`;
+
+  // Photo: centered, not full-bleed, positioned center-right
+  const photoBlock = photo
+    ? `<div style="position:absolute;top:280px;left:100px;right:60px;height:720px;
+         border-radius:20px;overflow:hidden;
+         box-shadow:0 8px 40px rgba(0,0,0,0.14);">
+         <img src="${fileToDataURL(photo)}"
+              style="width:100%;height:100%;object-fit:cover;display:block;">
+       </div>`
+    : `<div style="position:absolute;top:280px;left:100px;right:60px;height:720px;
+         border-radius:20px;background:#E8E4DC;"></div>`;
+
+  // Watermark digit — light gold, bottom-right
+  const watermark = `
+  <div style="position:absolute;bottom:-60px;right:-10px;z-index:2;
+    font-family:'Inter',sans-serif;font-size:500px;font-weight:900;
+    color:rgba(196,165,90,0.10);line-height:1;letter-spacing:-14px;
+    user-select:none;pointer-events:none;">${digit}</div>`;
+
+  // Highlight label: gold background bar with text
+  const highlightBar = highlightText
+    ? `<div style="display:inline-block;background:${C.gold};
+         padding:12px 32px;border-radius:6px;margin-bottom:18px;">
+         <span style="font-family:'Inter',sans-serif;font-size:44px;font-weight:900;
+           color:#fff;text-transform:uppercase;letter-spacing:1px;">${highlightText}</span>
+       </div>`
+    : "";
+
+  return wrap(`
+<div style="position:relative;width:1080px;height:1440px;overflow:hidden;background:${C.white};">
+  ${watermark}
+  ${chrome({ dark: false, brandBottom: true })}
+  ${cornerBlock}
+
+  ${photoBlock}
+
+  <!-- Text block: lower area -->
+  <div style="position:absolute;bottom:100px;left:60px;right:60px;z-index:10;">
+    ${highlightBar}
+    ${headline
+      ? `<h2 style="font-family:'Inter',sans-serif;font-size:52px;font-weight:700;
+           color:${C.text};line-height:1.1;letter-spacing:-1px;">
+           ${nl2br(headline)}
+         </h2>`
+      : ""}
+  </div>
+</div>`);
+}
+
+// ─── LAYOUT 8: QUESTION-COVER ─────────────────────────────────────────────────
+// Dark cinematic photo, question headline at top (large), gold arrow divider
+// in the center, counter-question or answer at bottom.
+// Pattern: "Existe uma época certa para operar?" (ref-21)
+//
+// Roteiro fields: headline (question top), counter_question (answer/bottom),
+//                 photo, category
+
+function questionCoverSlide(slide, photo) {
+  const headline       = slide.headline        || "";
+  const counterQ       = slide.counter_question || slide.supporting_text || "";
+  const category       = slide.category        || "";
+
+  const photoBlock = photo
+    ? `<img src="${fileToDataURL(photo)}"
+         style="position:absolute;inset:0;width:100%;height:100%;
+                object-fit:cover;filter:brightness(0.60) contrast(1.08);
+                z-index:1;display:block;">`
+    : `<div style="position:absolute;inset:0;background:#111820;z-index:1;"></div>`;
+
+  // Top gradient for chrome
+  const gradTop = `<div style="position:absolute;top:0;left:0;right:0;height:220px;
+    background:linear-gradient(to bottom,rgba(0,0,0,0.70) 0%,transparent 100%);
+    z-index:2;pointer-events:none;"></div>`;
+
+  // Bottom gradient for lower text
+  const gradBottom = `<div style="position:absolute;bottom:0;left:0;right:0;height:45%;
+    background:linear-gradient(to top,rgba(0,0,0,0.80) 40%,transparent 100%);
+    z-index:2;pointer-events:none;"></div>`;
+
+  // Center divider: gold line + arrow
+  const divider = `
+  <div style="position:absolute;top:50%;left:60px;right:60px;
+    transform:translateY(-50%);z-index:10;
+    display:flex;align-items:center;gap:24px;">
+    <div style="flex:1;height:1px;background:rgba(196,165,90,0.50);"></div>
+    <span style="font-family:'Inter',sans-serif;font-size:32px;font-weight:300;
+      color:${C.gold};letter-spacing:2px;">→</span>
+    <div style="flex:1;height:1px;background:rgba(196,165,90,0.50);"></div>
+  </div>`;
+
+  return wrap(`
+<div style="position:relative;width:1080px;height:1440px;overflow:hidden;background:${C.dark};">
+  ${photoBlock}
+  ${gradTop}
+  ${gradBottom}
+  ${chrome({ dark: true, category: category || null, brandBottom: true })}
+  ${divider}
+
+  <!-- Question: upper block, centered -->
+  <div style="position:absolute;top:130px;left:60px;right:60px;z-index:10;text-align:center;">
+    <h1 style="font-family:'Inter',sans-serif;font-size:74px;font-weight:800;
+      color:#fff;line-height:1.02;letter-spacing:-2px;">
+      ${nl2br(headline)}
+    </h1>
+  </div>
+
+  <!-- Counter-question: lower block, centered -->
+  ${counterQ
+    ? `<div style="position:absolute;bottom:100px;left:60px;right:60px;z-index:10;text-align:center;">
+         <p style="font-family:'Inter',sans-serif;font-size:54px;font-weight:600;
+           color:rgba(255,255,255,0.88);line-height:1.1;letter-spacing:-1px;font-style:italic;">
+           ${nl2br(counterQ)}
+         </p>
+       </div>`
+    : ""}
+</div>`);
+}
+
 // ─── ROUTE ───────────────────────────────────────────────────────────────────
 
 function renderSlide(slide, photo) {
   switch (slide.layout) {
-    case "cover":        return coverSlide(slide, photo);
-    case "editorial":    return editorialSlide(slide, photo);
-    case "numbered":     return numberedSlide(slide, photo);
-    case "white-card":   return whiteCardSlide(slide, photo);
-    case "white-arc":    return whiteArcSlide(slide);
-    case "bullet-photo": return bulletPhotoSlide(slide, photo);
-    default:             return editorialSlide(slide, photo); // fallback
+    case "cover":           return coverSlide(slide, photo);
+    case "editorial":       return editorialSlide(slide, photo);
+    case "numbered":        return numberedSlide(slide, photo);
+    case "white-card":      return whiteCardSlide(slide, photo);
+    case "white-arc":       return whiteArcSlide(slide);
+    case "bullet-photo":    return bulletPhotoSlide(slide, photo);
+    case "numbered-cover":  return numberedCoverSlide(slide, photo);
+    case "question-cover":  return questionCoverSlide(slide, photo);
+    default:                return editorialSlide(slide, photo); // fallback
   }
 }
 
@@ -548,19 +703,22 @@ function parseRoteiro(text) {
     };
 
     slides.push({
-      num:            parseInt(m[1]),
-      tipo:           get("tipo"),
-      layout:         get("layout") || "editorial",
-      category:       get("category"),
-      headline:       get("headline"),
-      subtitle_italic:get("subtitle_italic"),
-      cta:            get("cta"),
-      number:         get("number"),
-      icon:           get("icon"),
-      badge_label:    get("badge_label") || "ERRO",
-      subtitle_gold:  get("subtitle_gold"),
-      supporting_text:get("supporting_text"),
-      items:          getArray("items"),
+      num:             parseInt(m[1]),
+      tipo:            get("tipo"),
+      layout:          get("layout") || "editorial",
+      category:        get("category"),
+      headline:        get("headline"),
+      subtitle_italic: get("subtitle_italic"),
+      cta:             get("cta"),
+      number:          get("number"),
+      icon:            get("icon"),
+      badge_label:     get("badge_label") || "ERRO",
+      badge_text:      get("badge_text"),
+      subtitle_gold:   get("subtitle_gold"),
+      supporting_text: get("supporting_text"),
+      highlight_text:  get("highlight_text"),
+      counter_question:get("counter_question"),
+      items:           getArray("items"),
     });
   }
   return slides;
@@ -573,9 +731,12 @@ export async function generateSlides(roteiroPath, outDir) {
   const slides = parseRoteiro(text);
   const photos = getPhotos();
 
-  // Slides that need photos: cover, editorial, numbered, white-card, bullet-photo
+  // Slides that need photos
   // white-arc does NOT use a photo
-  const PHOTO_LAYOUTS = new Set(["cover", "editorial", "numbered", "white-card", "bullet-photo"]);
+  const PHOTO_LAYOUTS = new Set([
+    "cover", "editorial", "numbered", "white-card", "bullet-photo",
+    "numbered-cover", "question-cover",
+  ]);
 
   let photoIdx = 0;
   function nextPhoto() {
