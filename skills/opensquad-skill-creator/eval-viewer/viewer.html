@@ -846,7 +846,19 @@
 
           const htmlStr = XLSX.utils.sheet_to_html(ws, { editable: false });
           const wrapper = document.createElement("div");
-          wrapper.innerHTML = htmlStr;
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(htmlStr, "text/html");
+          // Only allow table structure — strip any script/event-handler injection
+          const table = doc.querySelector("table");
+          if (table) {
+            // Remove all event-handler attributes from every element
+            table.querySelectorAll("*").forEach((el) => {
+              [...el.attributes].forEach((attr) => {
+                if (attr.name.startsWith("on")) el.removeAttribute(attr.name);
+              });
+            });
+            wrapper.appendChild(table);
+          }
           container.appendChild(wrapper);
         }
       } catch (err) {

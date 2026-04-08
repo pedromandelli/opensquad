@@ -1,6 +1,8 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
+const SAFE_NAME_RE = /^[a-z0-9][a-z0-9_-]*$/i;
+
 const MAX_RUNS = 20;
 
 export async function listRuns(squadName, targetDir = process.cwd()) {
@@ -12,7 +14,9 @@ export async function listRuns(squadName, targetDir = process.cwd()) {
       squadNames = [squadName];
     } else {
       const entries = await readdir(squadsDir, { withFileTypes: true });
-      squadNames = entries.filter((e) => e.isDirectory()).map((e) => e.name);
+      squadNames = entries
+        .filter((e) => e.isDirectory() && SAFE_NAME_RE.test(e.name))
+        .map((e) => e.name);
     }
   } catch {
     return [];
@@ -25,7 +29,9 @@ export async function listRuns(squadName, targetDir = process.cwd()) {
     let runDirs;
     try {
       const entries = await readdir(outputDir, { withFileTypes: true });
-      runDirs = entries.filter((e) => e.isDirectory()).map((e) => e.name);
+      runDirs = entries
+        .filter((e) => e.isDirectory() && SAFE_NAME_RE.test(e.name))
+        .map((e) => e.name);
     } catch {
       continue;
     }

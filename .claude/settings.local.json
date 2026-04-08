@@ -4,8 +4,25 @@
       "Read(//c/Users/renat/.claude/plugins//**)",
       "Read(//c/Users/renat/.claude/plugins/**)",
       "Read(//c/Users/renat/.claude/**)",
-      "Edit(/.claude/skills/opensquad-dev/**)"
+      "Edit(/.claude/skills/opensquad-dev/**)",
+      "Bash(python -m http.server 8765 --directory \"squads/carrossel-vascular/output/2026-04-07-195853\")",
+      "Bash(curl -s http://localhost:8765)",
+      "Bash(break)",
+      "mcp__playwright__browser_resize",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_navigate",
+      "Bash(grep -E '^v[0-9]+$')",
+      "Bash(node _run.mjs)",
+      "Bash(ls -lh squads/carrossel-vascular/output/2026-04-08-121553/slides/v1/*.html)",
+      "Bash(head -5 ls -lh squads/carrossel-vascular/output/2026-04-08-121553/slides/v1/*.png)",
+      "Bash(mkdir -p /Users/pedromandelli/Documents/Code/opensquad/squads/carrossel-vascular/output/2026-04-08-121553/slides/v3)",
+      "Bash(mkdir -p /Users/pedromandelli/Documents/Code/opensquad/squads/carrossel-vascular/output/2026-04-08-144930/slides/v1)",
+      "Bash(git add:*)"
     ]
   },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "playwright"
+  ],
   "outputStyle": "default"
 }
