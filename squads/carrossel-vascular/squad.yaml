@@ -1,0 +1,26 @@
+# Squad: Carrossel VascularCare
+# Instagram carousel content creation for VascularCare clinic
+
+name: "Carrossel VascularCare"
+code: "carrossel-vascular"
+description: "Cria carrosséis de Instagram engajadores, cientificamente precisos e visualmente sofisticados para a VascularCare."
+domain: content
+language: pt-BR
+
+pipeline:
+  file: pipeline/pipeline.yaml
+
+skills:
+  - web_search
+  - web_fetch
+  - image-creator
+
+data:
+  - pipeline/data/research-brief.md
+  - pipeline/data/domain-framework.md
+  - pipeline/data/quality-criteria.md
+  - pipeline/data/output-examples.md
+  - pipeline/data/anti-patterns.md
+  - pipeline/data/tone-of-voice.md
+  - pipeline/data/template-reference.html
+  - pipeline/data/visual-identity.md

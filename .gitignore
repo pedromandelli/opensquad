@@ -2,7 +2,10 @@ node_modules/
 .env
 *.log
 _opensquad/logs/
-squads/*/
+squads/*/output/
+squads/*/state.json
+squads/.DS_Store
+squads/*/.DS_Store
 _opensquad/_memory/company.md
 _opensquad/_memory/preferences.md
 _opensquad/_browser_profile/

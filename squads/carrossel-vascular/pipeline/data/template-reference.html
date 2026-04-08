@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { width: 1080px; height: 1440px; overflow: hidden; font-family: 'Montserrat', sans-serif; background: #fff; }
+
+    /* ─── BASE SLIDE ─── */
+    .slide {
+      width: 1080px; height: 1440px;
+      display: flex; flex-direction: column;
+      justify-content: space-between;
+      padding: 64px 72px 56px;
+      position: relative; overflow: hidden;
+    }
+
+    /* ─── HEADER ─── */
+    .slide-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-bottom: 20px;
+      border-bottom: 1.5px solid #D8C8BC;
+      flex-shrink: 0;
+    }
+    .slide-header span {
+      font-size: 24px; font-weight: 600;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: #A0522D;
+    }
+
+    /* ─── BODY ─── */
+    .slide-body {
+      flex: 1; display: flex; flex-direction: column;
+      justify-content: center; gap: 32px;
+      padding: 24px 0; min-height: 0;
+    }
+    .headline { font-size: 66px; font-weight: 700; line-height: 1.05; color: #A0522D; }
+    .body-text { font-size: 36px; font-weight: 400; line-height: 1.55; color: #333333; }
+    .body-text strong { font-weight: 700; color: #222222; }
+    .body-text em { font-style: italic; }
+
+    /* ─── FOOTER ─── */
+    .slide-footer {
+      display: flex; align-items: center; gap: 20px;
+      padding-top: 20px;
+      border-top: 1.5px solid #D8C8BC;
+      flex-shrink: 0;
+    }
+    .logo-img { height: 44px; width: auto; }
+
+    /* ─── DARK VARIANT ─── */
+    .slide.dark { background: #111111; }
+    .slide.dark .slide-header { border-bottom-color: #333333; }
+    .slide.dark .slide-header span { color: #AAAAAA; }
+    .slide.dark .headline { color: #FFFFFF; }
+    .slide.dark .body-text { color: #DDDDDD; }
+    .slide.dark .slide-footer { border-top-color: #333333; }
+
+    /* ─── ACCENT VARIANT ─── */
+    .slide.accent { background: linear-gradient(160deg, #fff7f2 0%, #f3e0d4 100%); }
+
+    /* ─── COVER VARIANT ─── */
+    .slide.cover { background: #111111; padding: 0; }
+    .cover-photo { position: absolute; inset: 0; background-size: cover; background-position: center top; filter: grayscale(100%) brightness(0.65); z-index: 0; }
+    .cover-overlay { position: absolute; bottom: 0; left: 0; right: 0; height: 55%; background: linear-gradient(to top, rgba(0,0,0,0.92) 60%, transparent 100%); z-index: 1; }
+    .cover-header { position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: flex-start; padding: 48px 72px 0; z-index: 3; }
+    .cover-header span { font-size: 22px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.85); }
+    .cover-brand { position: absolute; top: 52px; left: 72px; right: 72px; font-size: 186px; font-weight: 900; line-height: 1; letter-spacing: -4px; text-transform: uppercase; color: rgba(255,255,255,0.90); z-index: 2; }
+    .cover-doctor { position: absolute; top: 160px; right: 72px; font-size: 22px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.80); text-align: right; line-height: 1.4; z-index: 3; }
+    .cover-bottom { position: absolute; bottom: 56px; left: 72px; right: 72px; z-index: 4; }
+    .cover-headline { font-size: 92px; font-weight: 800; line-height: 0.95; color: #FFFFFF; }
+    .cover-sub { margin-top: 16px; font-size: 38px; font-weight: 400; line-height: 1.3; color: rgba(255,255,255,0.85); }
+    .cover-sub em { font-style: italic; font-weight: 600; }
+
+    /* ─── STATEMENT VARIANT ─── */
+    /* Large centered quote: headline bold + supporting_text italic continuation */
+    .statement-body { flex: 1; display: flex; align-items: center; justify-content: center; padding: 24px 0; }
+    .statement-text { font-size: 72px; font-weight: 700; line-height: 1.12; color: #A0522D; text-align: center; }
+    .statement-text em { font-style: italic; color: #555555; font-weight: 600; }
+
+    /* ─── CHECKLIST VARIANT ─── */
+    /* headline + ✓ checkmark item list */
+    .check-list { list-style: none; display: flex; flex-direction: column; gap: 18px; }
+    .check-item { display: flex; align-items: flex-start; gap: 20px; font-size: 38px; font-weight: 500; line-height: 1.3; color: #333333; }
+    .check-mark { color: #A0522D; font-weight: 700; font-size: 44px; line-height: 1; flex-shrink: 0; margin-top: 2px; }
+
+    /* ─── TWO-SECTION VARIANT ─── */
+    /* Top: headline + checklist | Bottom: two-column (text + photo) */
+    .section-divider { width: 100%; height: 2px; background: #D8C8BC; flex-shrink: 0; margin: 16px 0; }
+    .two-col { display: flex; align-items: center; gap: 28px; }
+    .two-col-text { flex: 1; display: flex; flex-direction: column; gap: 14px; }
+    .two-col-photo { width: 380px; flex-shrink: 0; }
+    .two-col-photo img { width: 380px; height: 380px; object-fit: cover; filter: grayscale(100%) brightness(0.85); border-radius: 3px; display: block; }
+    .sub-hl { font-size: 54px; font-weight: 700; line-height: 1.1; color: #A0522D; }
+    .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .bullet-item { display: flex; align-items: flex-start; gap: 16px; font-size: 32px; font-weight: 500; line-height: 1.35; color: #333333; }
+    .bullet-dot { color: #A0522D; font-weight: 700; font-size: 36px; line-height: 1; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<!--
+  ══════════════════════════════════════════════════════
+  LAYOUT 1: STANDARD — headline + supporting text
+  Use: default body slides with text hierarchy
+  ══════════════════════════════════════════════════════
+-->
+<section class="slide">
+  <header class="slide-header">
+    <span>Abril 26</span>
+    <span>Vol. 14</span>
+  </header>
+  <main class="slide-body">
+    <h2 class="headline">Título do slide em terracotta</h2>
+    <p class="body-text">Texto de apoio com <strong>palavras em destaque</strong> e possibilidade de <em>itálico</em> para ênfase elegante. Até 80 palavras por slide, respeitando a faixa de legibilidade para mobile.</p>
+  </main>
+  <footer class="slide-footer">
+    <span style="font-size:28px;font-weight:700;color:#222">VascularCare<sup style="font-size:16px">®</sup></span>
+  </footer>
+</section>
+
+<!--
+  ══════════════════════════════════════════════════════
+  LAYOUT 2: STATEMENT — large centered quote
+  Use: quotes, key messages, emotional bridges between sections
+  headline = bold part | supporting_text = italic continuation
+  ══════════════════════════════════════════════════════
+-->
+<section class="slide">
+  <header class="slide-header">
+    <span>Abril 26</span>
+    <span>Vol. 14</span>
+  </header>
+  <div class="statement-body">
+    <p class="statement-text">
+      Cuidar da circulação não é apenas tratar sintomas —
+      <em>é devolver leveza para viver o seu dia com mais liberdade.</em>
+    </p>
+  </div>
+  <footer class="slide-footer">
+    <span style="font-size:28px;font-weight:700;color:#222">VascularCare<sup style="font-size:16px">®</sup></span>
+  </footer>
+</section>
+
+<!--
+  ══════════════════════════════════════════════════════
+  LAYOUT 3: CHECKLIST — headline + ✓ list
+  Use: symptoms, tips, criteria, differentiators
+  **bold** inside items renders as <strong>
+  ══════════════════════════════════════════════════════
+-->
+<section class="slide">
+  <header class="slide-header">
+    <span>Abril 26</span>
+    <span>Vol. 14</span>
+  </header>
+  <main class="slide-body">
+    <h2 class="headline">5 sinais que diferenciam lipedema</h2>
+    <ul class="check-list">
+      <li class="check-item"><span class="check-mark">✓</span><span><strong>Dor desproporcional</strong> ao toque</span></li>
+      <li class="check-item"><span class="check-mark">✓</span><span><strong>Inchaço bilateral</strong> e simétrico nas pernas</span></li>
+      <li class="check-item"><span class="check-mark">✓</span><span>Pés e mãos <strong>preservados</strong></span></li>
+      <li class="check-item"><span class="check-mark">✓</span><span>Sem melhora com <strong>restrição alimentar</strong></span></li>
+      <li class="check-item"><span class="check-mark">✓</span><span><strong>Hematomas fáceis</strong> sem causa aparente</span></li>
+    </ul>
+  </main>
+  <footer class="slide-footer">
+    <span style="font-size:28px;font-weight:700;color:#222">VascularCare<sup style="font-size:16px">®</sup></span>
+  </footer>
+</section>
+
+<!--
+  ══════════════════════════════════════════════════════
+  LAYOUT 4: PHOTO_CHECKLIST — centered photo + ✓ list below
+  Use: procedure results, outcomes, post-treatment benefits
+  ══════════════════════════════════════════════════════
+-->
+<section class="slide">
+  <header class="slide-header">
+    <span>Abril 26</span>
+    <span>Vol. 14</span>
+  </header>
+  <main class="slide-body" style="gap:24px;">
+    <div style="width:100%;height:480px;overflow:hidden;border-radius:4px;">
+      <!-- Replace src with actual grayscale photo -->
+      <div style="width:100%;height:480px;background:#ccc;border-radius:4px;display:flex;align-items:center;justify-content:center;">
+        <span style="color:#666;font-size:28px;">[ Foto do procedimento ]</span>
+      </div>
+    </div>
+    <ul class="check-list" style="gap:14px;">
+      <li class="check-item" style="font-size:36px;"><span class="check-mark">✓</span><span>Menos dor e sensação de peso</span></li>
+      <li class="check-item" style="font-size:36px;"><span class="check-mark">✓</span><span>Mais disposição ao longo do dia</span></li>
+      <li class="check-item" style="font-size:36px;"><span class="check-mark">✓</span><span>Movimentos com <strong>conforto e segurança</strong></span></li>
+    </ul>
+  </main>
+  <footer class="slide-footer">
+    <span style="font-size:28px;font-weight:700;color:#222">VascularCare<sup style="font-size:16px">®</sup></span>
+  </footer>
+</section>
+
+<!--
+  ══════════════════════════════════════════════════════
+  LAYOUT 5: TWO_SECTION — top checklist + bottom two-column (text + photo)
+  Use: problem+solution combination, complex informational slides
+  headline + items = top section
+  second_headline + second_items + photo = bottom section
+  ══════════════════════════════════════════════════════
+-->
+<section class="slide">
+  <header class="slide-header">
+    <span>Abril 26</span>
+    <span>Vol. 14</span>
+  </header>
+  <main class="slide-body" style="gap:16px;">
+    <h2 class="headline" style="font-size:60px;">Sinais que impactam sua rotina</h2>
+    <ul class="check-list" style="gap:12px;">
+      <li class="check-item" style="font-size:34px;gap:16px;"><span class="check-mark" style="font-size:38px;">✓</span><span><strong>Inchaço</strong> no fim do dia</span></li>
+      <li class="check-item" style="font-size:34px;gap:16px;"><span class="check-mark" style="font-size:38px;">✓</span><span><strong>Cansaço</strong> nas pernas</span></li>
+      <li class="check-item" style="font-size:34px;gap:16px;"><span class="check-mark" style="font-size:38px;">✓</span><span><strong>Veias aparentes</strong> ou doloridas</span></li>
+      <li class="check-item" style="font-size:34px;gap:16px;"><span class="check-mark" style="font-size:38px;">✓</span><span>Desconfortos que <strong>vão além da estética</strong></span></li>
+    </ul>
+    <div class="section-divider"></div>
+    <div class="two-col">
+      <div class="two-col-text">
+        <h3 class="sub-hl">Como cuidamos:</h3>
+        <ul class="bullet-list">
+          <li class="bullet-item"><span class="bullet-dot">•</span><span>Tecnologia avançada aliada a um olhar atento</span></li>
+          <li class="bullet-item"><span class="bullet-dot">•</span><span>Procedimentos minimamente invasivos</span></li>
+          <li class="bullet-item"><span class="bullet-dot">•</span><span>Tratamentos personalizados para cada paciente</span></li>
+        </ul>
+      </div>
+      <div class="two-col-photo">
+        <div style="width:380px;height:380px;background:#ccc;border-radius:3px;display:flex;align-items:center;justify-content:center;">
+          <span style="color:#666;font-size:24px;">[ Foto ]</span>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="slide-footer">
+    <span style="font-size:28px;font-weight:700;color:#222">VascularCare<sup style="font-size:16px">®</sup></span>
+  </footer>
+</section>
+
+<!--
+  ══════════════════════════════════════════════════════
+  LAYOUT 6: COVER — magazine style with photo
+  Always the first slide. "VASCULAR" display text + photo subject.
+  ══════════════════════════════════════════════════════
+-->
+<section class="slide cover">
+  <div class="cover-photo" style="background-image: url('photos/dr-marcelo/filename.jpg');"></div>
+  <div class="cover-overlay"></div>
+  <header class="cover-header">
+    <span>Abril 26</span>
+    <span>Vol. 14</span>
+  </header>
+  <div class="cover-brand">VASCULAR</div>
+  <div class="cover-doctor">Dr. Marcelo<br>Mandelli</div>
+  <div class="cover-bottom">
+    <h1 class="cover-headline">Sua saúde<br>vascular</h1>
+    <p class="cover-sub">também passa pela <em>saúde das suas pernas</em></p>
+  </div>
+</section>
+
+</body>
+</html>

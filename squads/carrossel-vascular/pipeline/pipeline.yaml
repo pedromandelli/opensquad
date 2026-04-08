@@ -1,0 +1,68 @@
+# Pipeline: Carrossel VascularCare
+# Topic → Strategy → Content Creation → Approval → Visual Rendering → Approval → Review → Final
+
+steps:
+  - step: 1
+    name: "topic-input"
+    file: steps/step-01-topic-input.md
+    type: checkpoint
+    output_file: squads/carrossel-vascular/output/topic.md
+
+  - step: 2
+    name: "content-strategy"
+    file: steps/step-02-content-strategy.md
+    type: agent
+    agent: nara-narrativa
+    execution: inline
+    input_file: squads/carrossel-vascular/output/topic.md
+    output_file: squads/carrossel-vascular/output/strategy-brief.md
+
+  - step: 3
+    name: "create-carousel"
+    file: steps/step-03-create-carousel.md
+    type: agent
+    agent: caio-carrossel
+    execution: inline
+    format: instagram-feed
+    input_file: squads/carrossel-vascular/output/strategy-brief.md
+    output_file: squads/carrossel-vascular/output/roteiro.md
+
+  - step: 4
+    name: "approve-content"
+    file: steps/step-04-approve-content.md
+    type: checkpoint
+
+  - step: 5
+    name: "render-slides"
+    file: steps/step-05-render-slides.md
+    type: agent
+    agent: diana-design
+    execution: inline
+    input_file: squads/carrossel-vascular/output/roteiro.md
+    output_file: squads/carrossel-vascular/output/slides/slide-01.html
+
+  - step: 6
+    name: "approve-visuals"
+    file: steps/step-06-approve-visuals.md
+    type: checkpoint
+
+  - step: 7
+    name: "review"
+    file: steps/step-07-review.md
+    type: agent
+    agent: renata-revisao
+    execution: inline
+    input_file: squads/carrossel-vascular/output/roteiro.md
+    output_file: squads/carrossel-vascular/output/review.md
+    on_reject: step-03-create-carousel
+
+  - step: 8
+    name: "final-approval"
+    file: steps/step-08-final-approval.md
+    type: checkpoint
+
+checkpoints:
+  - step-01-topic-input
+  - step-04-approve-content
+  - step-06-approve-visuals
+  - step-08-final-approval
