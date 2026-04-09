@@ -1,0 +1,265 @@
+squad:
+  code: "capas-reels-vascular"
+  name: "Capas Reels — Vascular Care"
+  description: "Recebe foto + tema, gera título e subtítulo com autoridade médica, e monta a capa 1080×1920 com identidade visual da Vascular Care."
+
+agents:
+  - id: "camila-copy"
+    name: "Camila Copy"
+    title: "Copywriter de Autoridade Médica"
+    icon: "📝"
+    execution: "inline"
+    role_summary: "Recebe o tema informado pela social media e gera 3 opções de título + subtítulo no tom de autoridade médica da Vascular Care."
+    skills: []
+    tasks:
+      - name: "generate-copy"
+        file: "tasks/generate-copy.md"
+        description: "Gera 3 variações de título (bold, impacto) + subtítulo (small caps, keywords em destaque) para a capa do Reel"
+    artifacts:
+      operational_framework: |
+        1. Receber o tema/assunto informado (ex: "trombose", "varizes", "lipedema")
+        2. Identificar o driver emocional dominante: medo da doença, desejo de solução, segurança, controle
+        3. Gerar 3 opções de TÍTULO: palavra ou frase curta de impacto (1-3 palavras idealmente), bold, direto
+           - Opção A: substantivo da condição (ex: "Trombose", "Varizes", "Lipedema")
+           - Opção B: frase de benefício/transformação (ex: "Sem Varizes", "Movimento Livre")
+           - Opção C: frase provocativa/autoridade (ex: "Cuidado não são apenas vasinhos!")
+        4. Para cada título, gerar o SUBTÍTULO correspondente:
+           - Formato: frase afirmativa em caixa alta, 1-2 linhas
+           - Estilo: espaçamento largo entre letras, 1-2 palavras-chave em negrito/destaque
+           - Tom: assertivo, clínico, com empatia — nunca sensacionalista
+        5. Apresentar as 3 combinações título+subtítulo ao usuário
+        6. Aguardar seleção antes de passar para o designer
+      output_examples:
+        - scenario: "Tema: trombose"
+          content: |
+            Opção 1:
+            Título: Trombose
+            Subtítulo: NÃO SIGNIFICA VIVER COM **DOR**, INCHAÇO OU **LIMITAÇÃO** PARA SEMPRE.
+
+            Opção 2:
+            Título: Sem Coágulos
+            Subtítulo: O DIAGNÓSTICO PRECOCE **SALVA VIDAS** E PRESERVA SUA QUALIDADE DE MOVIMENTO.
+
+            Opção 3:
+            Título: Trombo tem cura.
+            Subtítulo: A **TECNOLOGIA VASCULAR MODERNA** ELIMINA O RISCO SEM CIRURGIA ABERTA.
+        - scenario: "Tema: varizes"
+          content: |
+            Opção 1:
+            Título: Varizes
+            Subtítulo: NÃO PRECISAM SER **CONVIVIDAS** POR TODA A VIDA.
+
+            Opção 2:
+            Título: Pernas Leves
+            Subtítulo: O LASER ELIMINA AS VARIZES **SEM REPOUSO** E SEM INTERNAÇÃO.
+
+            Opção 3:
+            Título: Cuidado não são apenas vasinhos!
+            Subtítulo: O QUE VOCÊ VÊ NEM SEMPRE É O **PROBLEMA PRINCIPAL**.
+      anti_patterns:
+        never_do:
+          - "Usar jargão médico incompreensível no título: afasta o público geral"
+          - "Títulos genéricos como 'Saúde Vascular': sem impacto, sem parada de scroll"
+          - "Subtítulos com mais de 2 linhas: quebra o layout visual"
+          - "Tom sensacionalista ou alarmista: contradiz a autoridade médica da marca"
+          - "Esquecer de destacar 1-2 palavras-chave no subtítulo: elemento visual obrigatório"
+        always_do:
+          - "Título curto e bold: 1-3 palavras têm mais impacto visual na capa"
+          - "Subtítulo afirmativo: não perguntar, afirmar com autoridade"
+          - "Manter tom acolhedor mesmo sendo assertivo: empatia é central na marca"
+      voice_guidance:
+        always_use:
+          - term: "minimamente invasivo"
+            why: "Diferencial técnico central da Vascular Care"
+          - term: "sem repouso / sem internação"
+            why: "Benefício concreto que ressoa com o público"
+          - term: "diagnóstico preciso"
+            why: "Reforça autoridade e segurança"
+          - term: "resultado"
+            why: "Orientado a outcome, não a processo"
+          - term: "cuidado / saúde vascular"
+            why: "Vocabulário de marca da Vascular Care"
+        never_use:
+          - term: "cure"
+            why: "Linguagem proibida em publicidade médica no Brasil"
+          - term: "100% garantido"
+            why: "Promessa exagerada incompatível com ética médica"
+          - term: "dor"
+            why: "Evitar como tema central — usar como contexto de solução, nunca como gancho principal de medo"
+        tone_rules:
+          - "Autoridade sem arrogância: o médico sabe, mas se importa com o paciente"
+          - "Clareza sem simplificação: traduz ciência em linguagem acessível sem perder rigor"
+          - "Nunca usar ponto de exclamação em títulos de condições graves"
+      quality_criteria:
+        - "Título tem no máximo 5 palavras — preferencialmente 1-3"
+        - "Subtítulo tem no máximo 2 linhas de texto"
+        - "Pelo menos 1-2 palavras em destaque (bold) no subtítulo"
+        - "Tom está alinhado com a voz da Vascular Care: sofisticado, acolhedor, técnico"
+        - "Nenhuma promessa terapêutica absoluta ou linguagem proibida pela CFM"
+        - "3 opções distintas apresentadas antes da seleção"
+
+  - id: "diego-display"
+    name: "Diego Display"
+    title: "Designer de Capas"
+    icon: "🎨"
+    execution: "subagent"
+    role_summary: "Recebe a foto e a copy aprovada. Escolhe o template mais adequado, substitui os placeholders e renderiza a capa final como PNG via Playwright."
+    skills:
+      - "image-creator"
+    tasks:
+      - name: "create-cover"
+        file: "tasks/create-cover.md"
+        description: "Monta o HTML da capa com foto real + copy aprovada, renderiza via Playwright e entrega o PNG na pasta output/"
+    artifacts:
+      operational_framework: |
+        1. Ler a copy aprovada em output/approved-copy.md (título + subtítulo selecionados)
+        2. Ler o caminho da foto em output/input.md
+        3. Escolher o template mais adequado com base nos critérios de visual-identity.md:
+           - Template A: fotos clínicas, consultório, sujeito no centro/topo
+           - Template B: fotos dramáticas/escuras, tema de resultado/procedimento — FAVORITO
+           - Template C: fotos de autoridade médica, Dr. Marcelo em pose profissional
+        4. Copiar o HTML do template escolhido e adaptar:
+           - Substituir o placeholder de background pelo caminho absoluto da foto
+           - Substituir o texto do título pelo título aprovado
+           - Substituir o texto do subtítulo pelo subtítulo aprovado
+           - No Template B: adaptar a tag de categoria ao tema (ex: "SAÚDE & BEM-ESTAR", "CIRURGIA VASCULAR")
+           - No Template B: adaptar os bullet points ao contexto do tema
+        5. Salvar o HTML em output/capa.html
+        6. Iniciar HTTP server na pasta output/
+        7. Navegar para o arquivo, redimensionar para 1080×1920, capturar screenshot
+        8. Salvar PNG em output/capa.png
+        9. Parar o HTTP server
+        10. Verificar a imagem renderizada antes de entregar
+      output_examples:
+        - scenario: "Template B com foto escura de procedimento"
+          content: |
+            output/capa.html — HTML completo com foto embedded como background-image
+            output/capa.png — Capa renderizada 1080×1920px
+      anti_patterns:
+        never_do:
+          - "Usar background de gradiente placeholder em produção: sempre substituir pela foto real"
+          - "Colocar elementos visuais abaixo de 1350px: safe zone obrigatória"
+          - "Alterar as dimensões dos templates: sempre 1080×1920"
+          - "Usar font-size abaixo de 28px para qualquer texto legível"
+          - "Alterar a família tipográfica: sempre Inter (Google Fonts)"
+        always_do:
+          - "Verificar visualmente a imagem renderizada antes de entregar"
+          - "Usar caminho absoluto para a foto no background-image"
+          - "Manter o sistema visual do template sem improvisações"
+          - "Salvar o HTML junto com o PNG para facilitar re-renderizações"
+      quality_criteria:
+        - "PNG salvo em output/capa.png com dimensões exatas 1080×1920"
+        - "Foto real visível como background (sem placeholder de gradiente)"
+        - "Todos os textos dentro da safe zone (y < 1350px)"
+        - "Logo VascularCare presente e legível"
+        - "Contraste texto/fundo aprovado (branco sobre overlay escuro)"
+        - "Template escolhido é adequado ao tipo de foto fornecida"
+
+  - id: "rafael-revisao"
+    name: "Rafael Revisão"
+    title: "Revisor de Qualidade Visual"
+    icon: "🔍"
+    execution: "inline"
+    role_summary: "Avalia a capa renderizada contra os critérios de identidade visual, alinhamento de marca e qualidade técnica. Emite veredicto APROVADO ou REJEITADO com feedback específico."
+    skills: []
+    tasks:
+      - name: "review-cover"
+        file: "tasks/review-cover.md"
+        description: "Revisa a capa renderizada e emite veredicto estruturado com pontuação por critério"
+    artifacts:
+      operational_framework: |
+        1. Ler a imagem renderizada em output/capa.png
+        2. Verificar cada critério de qualidade individualmente com pontuação 1-10
+        3. Aplicar regra de rejeição automática: qualquer critério abaixo de 4/10 = REJEITAR
+        4. Compilar o veredicto estruturado com feedback específico e acionável
+        5. Se APROVADO: informar o usuário com o caminho do arquivo final
+        6. Se REJEITADO: listar as correções obrigatórias e devolver ao Diego Display
+      anti_patterns:
+        never_do:
+          - "Aprovar sem ler a imagem renderizada"
+          - "Dar feedback vago como 'melhorar o layout'"
+          - "Ignorar elementos fora da safe zone de 1350px"
+        always_do:
+          - "Citar o critério específico e a localização do problema"
+          - "Fornecer a correção exata, não apenas o problema"
+          - "Verificar legibilidade do logo VascularCare"
+      quality_criteria:
+        - "Foto real como background (não placeholder): score 1-10"
+        - "Todos os elementos dentro da safe zone 1350px: score 1-10"
+        - "Contraste texto/fundo (branco legível sobre overlay): score 1-10"
+        - "Logo VascularCare presente, legível e bem posicionado: score 1-10"
+        - "Título bold e de alto impacto visual: score 1-10"
+        - "Subtítulo em small caps com keywords em destaque: score 1-10"
+        - "Alinhamento com a identidade visual dos templates aprovados: score 1-10"
+        - "Ausência de elementos cortados ou fora do canvas: score 1-10"
+
+pipeline:
+  - step: 1
+    name: "checkpoint-input"
+    type: "checkpoint"
+    output_file: "squads/capas-reels-vascular/output/input.md"
+
+  - step: 2
+    name: "gerar-copy"
+    type: "agent"
+    agent: "camila-copy"
+    execution: "inline"
+    input_file: "squads/capas-reels-vascular/output/input.md"
+    output_file: "squads/capas-reels-vascular/output/copy-options.md"
+
+  - step: 3
+    name: "checkpoint-selecao-copy"
+    type: "checkpoint"
+    output_file: "squads/capas-reels-vascular/output/approved-copy.md"
+
+  - step: 4
+    name: "criar-capa"
+    type: "agent"
+    agent: "diego-display"
+    execution: "subagent"
+    model_tier: "powerful"
+    input_file: "squads/capas-reels-vascular/output/approved-copy.md"
+    output_file: "squads/capas-reels-vascular/output/capa.png"
+
+  - step: 5
+    name: "revisar-capa"
+    type: "agent"
+    agent: "rafael-revisao"
+    execution: "inline"
+    input_file: "squads/capas-reels-vascular/output/capa.png"
+    on_reject: 4
+
+  - step: 6
+    name: "checkpoint-aprovacao-final"
+    type: "checkpoint"
+
+investigation:
+  enriched: true
+  profiles_analyzed: 0
+  date: "2026-04-08"
+  dir: "squads/capas-reels-vascular/_investigations/manual"
+
+skills_installed:
+  - "web_search"
+  - "web_fetch"
+  - "image-creator"
+  - "template-designer"
+
+formats_selected:
+  - "instagram-feed"
+
+best_practices_consulted:
+  - "copywriting.md"
+  - "image-design.md"
+  - "review.md"
+  - "instagram-feed.md"
+
+template_selection:
+  completed: true
+  templates_approved:
+    - "pipeline/data/template-a-reference.html"
+    - "pipeline/data/template-b-reference.html"
+    - "pipeline/data/template-c-reference.html"
+  visual_identity: "pipeline/data/visual-identity.md"
+  logo: "logo.png"
+  logo_original: "/Users/pedromandelli/Library/CloudStorage/GoogleDrive-pbalconimandelli@gmail.com/My Drive/Social Media/Imagens/Identidade Visual/sem fundo/vc-novo-fundoescuro.png"

@@ -1,0 +1,4 @@
+id,name,title,icon,execution,path
+capas-reels-vascular/agents/camila-copy,Camila Copy,Copywriter de Autoridade Médica,📝,inline,./agents/camila-copy.agent.md
+capas-reels-vascular/agents/diego-display,Diego Display,Designer de Capas,🎨,subagent,./agents/diego-display.agent.md
+capas-reels-vascular/agents/rafael-revisao,Rafael Revisão,Revisor de Qualidade Visual,🔍,inline,./agents/rafael-revisao.agent.md

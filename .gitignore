@@ -17,3 +17,10 @@ test-results/
 temp/squads/
 .claude/settings.local.json
 dashboards/test-results/
+
+# Build previews (heavy rendered images)
+squads/*/_build/*.png
+squads/*/_build/*.jpg
+
+# Playwright local logs and screenshots
+.playwright-mcp/

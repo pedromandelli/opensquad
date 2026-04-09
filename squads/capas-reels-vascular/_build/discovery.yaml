@@ -1,0 +1,29 @@
+squad_code: "capas-reels-vascular"
+purpose: "Criar capas para Reels do Instagram da Vascular Care. A social media fornece uma foto e um tema (ex: 'trombose'), e o squad gera automaticamente o título, o subtítulo e monta a capa com a identidade visual da marca."
+domain: "content"
+
+company:
+  name: "Vascular Care"
+  tone: "Autoridade e sofisticação: elegante, preciso, alto padrão. Empatia e acessibilidade: acolhedor, reconfortante e centrado no paciente."
+  products: "Cirurgia vascular de alta performance, saúde integrativa e fisioterapia, tratamento de obesidade e saúde metabólica"
+
+language: "Português (Brasil)"
+
+context:
+  audience: "Público geral — pessoas que buscam cuidados vasculares, prevenção e bem-estar"
+  platforms: "Instagram Reels (capa 9:16)"
+  tone: "Autoridade médica — sério, técnico, confiável"
+  workflow: "Input: foto + tema → Output: capa 9:16 com título bold, subtítulo em small caps com palavras-chave destacadas, logo Vascular Care"
+
+tools_needed:
+  - "template-designer"
+  - "image-creator"
+
+investigation:
+  enabled: true
+  mode: "manual"
+  profiles: []
+  reference_file: "squads/capas-reels-vascular/_investigations/manual/raw-content.md"
+
+target_formats:
+  - "instagram-feed"

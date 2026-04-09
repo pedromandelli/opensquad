@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      position: relative;
+      background: #0d1117;
+    }
+
+    /* Full-height photo background */
+    .photo-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, #1e2a3a 0%, #0f1923 35%, #1a1a2e 65%, #0d0d0d 100%);
+      /* RUNTIME: background-image: url('{FOTO_PATH}'); background-size: cover; background-position: center top; */
+    }
+
+    /* Subtle blue glow */
+    .texture {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 15%, rgba(59,130,246,0.07) 0%, transparent 55%);
+    }
+
+    /* Gradient overlay — light, preserves photo; darkens only near text */
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0) 45%,
+        rgba(0,0,0,0.30) 60%,
+        rgba(0,0,0,0.68) 72%,
+        rgba(0,0,0,0.82) 78%,
+        rgba(0,0,0,0.82) 100%
+      );
+    }
+
+    /* SAFE ZONE — all elements live here (1080 x 1350) */
+    .safe-zone {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1080px;
+      height: 1350px;
+    }
+
+    /* Main content — anchored to bottom of safe zone */
+    .content {
+      position: absolute;
+      left: 72px;
+      right: 160px;
+      bottom: 80px;
+    }
+
+    .title {
+      font-size: 148px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 0.95;
+      letter-spacing: -3px;
+      margin-bottom: 32px;
+    }
+
+    .subtitle {
+      font-size: 30px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.90);
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      line-height: 1.75;
+    }
+
+    .subtitle strong {
+      font-weight: 900;
+      color: #ffffff;
+    }
+
+    /* Logo — bottom-right of safe zone */
+    .logo {
+      position: absolute;
+      bottom: 80px;
+      right: 72px;
+    }
+
+    .logo img {
+      height: 44px;
+      width: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="photo-bg"></div>
+  <div class="texture"></div>
+  <div class="overlay"></div>
+
+  <div class="safe-zone">
+    <div class="content">
+      <div class="title">Varizes</div>
+      <div class="subtitle">
+        NÃO PRECISAM SER <strong>CONVIVIDAS</strong><br>
+        POR TODA A VIDA.
+      </div>
+    </div>
+
+    <div class="logo">
+      <img src="logo.png" alt="VascularCare">
+    </div>
+  </div>
+</body>
+</html>

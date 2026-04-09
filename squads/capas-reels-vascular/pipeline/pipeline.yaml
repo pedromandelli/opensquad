@@ -1,0 +1,45 @@
+pipeline:
+  name: "Capas Reels — Vascular Care"
+  squad: "capas-reels-vascular"
+  version: "1.0"
+  created: "2026-04-08"
+
+steps:
+  - id: "step-01"
+    name: "Checkpoint — Input (Foto + Tema)"
+    file: "steps/step-01-checkpoint-input.md"
+    type: checkpoint
+
+  - id: "step-02"
+    name: "Camila Copy — Gerar Opções de Copy"
+    file: "steps/step-02-gerar-copy.md"
+    agent: "capas-reels-vascular/agents/camila-copy"
+    execution: inline
+
+  - id: "step-03"
+    name: "Checkpoint — Seleção de Copy"
+    file: "steps/step-03-checkpoint-selecao-copy.md"
+    type: checkpoint
+
+  - id: "step-04"
+    name: "Diego Display — Criar Capa"
+    file: "steps/step-04-criar-capa.md"
+    agent: "capas-reels-vascular/agents/diego-display"
+    execution: subagent
+
+  - id: "step-05"
+    name: "Rafael Revisão — Revisar Capa"
+    file: "steps/step-05-revisar-capa.md"
+    agent: "capas-reels-vascular/agents/rafael-revisao"
+    execution: inline
+    on_reject: "step-04"
+
+  - id: "step-06"
+    name: "Checkpoint — Aprovação Final"
+    file: "steps/step-06-checkpoint-aprovacao-final.md"
+    type: checkpoint
+
+checkpoints:
+  - "step-01-checkpoint-input"
+  - "step-03-checkpoint-selecao-copy"
+  - "step-06-checkpoint-aprovacao-final"

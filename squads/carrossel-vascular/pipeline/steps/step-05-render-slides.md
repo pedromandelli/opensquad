@@ -19,8 +19,20 @@ Load these files before executing:
 
 ### Process
 
-1. Leia `squads/carrossel-vascular/output/topic.md` para verificar o campo `estilo:`.
-2. Crie um arquivo `_run.mjs` na pasta de output do run atual com o gerador correto:
+1. Leia `squads/carrossel-vascular/output/topic.md` para verificar os campos `estilo:` e `fotos:`.
+
+2. **Preparar fotos (se houver)** — Se `topic.md` contiver o campo `fotos:` com caminhos de imagens:
+   - Remova todas as imagens existentes em `squads/carrossel-vascular/pipeline/data/photos/` (arquivos .jpg, .jpeg, .png, .webp) preservando `LEIAME.md`:
+     ```bash
+     find squads/carrossel-vascular/pipeline/data/photos/ -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) -delete
+     ```
+   - Copie cada foto listada para a pasta `photos/`, mantendo o nome original:
+     ```bash
+     cp "<caminho_foto>" "squads/carrossel-vascular/pipeline/data/photos/"
+     ```
+   - Se `fotos:` estiver ausente ou vazio, pule este passo — o gerador usara as fotos que ja estiverem na pasta (ou nenhuma, se a pasta estiver vazia).
+
+3. Crie um arquivo `_run.mjs` na pasta de output do run atual com o gerador correto:
 
 **Se `estilo: revista`:**
 ```js
@@ -52,12 +64,12 @@ await screenshotAll(files);
 console.log("\n✅ Pronto.");
 ```
 
-3. Execute o `_run.mjs` com `node _run.mjs` na pasta de output.
-4. Após a execução, renderize cada PNG via Playwright para verificação visual:
+4. Execute o `_run.mjs` com `node _run.mjs` na pasta de output.
+5. Após a execução, renderize cada PNG via Playwright para verificação visual:
    - Inicie HTTP server: `python -m http.server 8765 --directory "<output_dir>" &`
    - Para cada slide: `browser_navigate` → `browser_resize 1080x1440` → `browser_take_screenshot`
    - Pare o server ao final.
-5. Retorne lista de arquivos gerados.
+6. Retorne lista de arquivos gerados.
 
 ## Output Format
 

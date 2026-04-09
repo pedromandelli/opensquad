@@ -21,4 +21,11 @@ Ordem sugerida de rotação: A → B → C → D → A → ...
 
 ## Proibições Explícitas
 
+## Pedro Ruiz Edition — Aprendizados
+
+- **Carrossel curto funciona**: 4 slides podem ser mais eficazes que 8 quando o tema é direto. Preferir densidades menores quando o usuário pedir.
+- **question-cover como capa**: layout novo (2026-04-08) — muito eficaz para temas que quebram crenças ou mitos. Usar quando o tema for comparativo ou provocativo.
+- **Pool de fotos**: fotos da mesma pasta se repetem entre slides do mesmo carrossel. Para próximos runs, adicionar mais fotos em `pipeline/data/photos/` ou usar subpastas por tema.
+- **Último bullet do bullet-photo**: bold deve ser no início da frase (padrão "**Palavra** continuação"), não no final. Orientar Caio nesta convenção.
+
 ## Técnico (específico do squad)

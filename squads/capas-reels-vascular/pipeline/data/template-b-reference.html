@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800;900&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      position: relative;
+      background: #060a0d;
+    }
+
+    /* Full-height dark photo background */
+    .photo-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(170deg, #0d1117 0%, #111820 20%, #0a0e12 50%, #060a0d 100%);
+      /* RUNTIME: background-image: url('{FOTO_PATH}'); background-size: cover; background-position: center; */
+    }
+
+    /* Strong overlay */
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom,
+        rgba(0,0,0,0.48) 0%,
+        rgba(0,0,0,0.32) 22%,
+        rgba(0,0,0,0.52) 45%,
+        rgba(0,0,0,0.80) 65%,
+        rgba(0,0,0,0.97) 75%,
+        rgba(0,0,0,0.97) 100%
+      );
+    }
+
+    /* SAFE ZONE — all elements live here (1080 x 1350) */
+    .safe-zone {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1080px;
+      height: 1350px;
+    }
+
+    /* TOP LEFT — Category tag */
+    .tag-topleft {
+      position: absolute;
+      top: 64px;
+      left: 64px;
+      font-size: 24px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.70);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      line-height: 1.4;
+    }
+
+    /* TOP RIGHT — Three dots */
+    .dots-topright {
+      position: absolute;
+      top: 72px;
+      right: 64px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .dot {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.55);
+    }
+
+    /* MAIN TITLE — anchored to bottom of safe zone */
+    .main-title {
+      position: absolute;
+      left: 52px;
+      right: 52px;
+      bottom: 188px;
+      font-size: 112px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.0;
+      letter-spacing: -1px;
+      text-transform: uppercase;
+    }
+
+    /* BULLET POINTS */
+    .bullets {
+      position: absolute;
+      left: 52px;
+      bottom: 56px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .bullet-item {
+      font-size: 28px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.82);
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .bullet-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.55);
+      flex-shrink: 0;
+    }
+
+    /* Logo — bottom right of safe zone */
+    .logo {
+      position: absolute;
+      bottom: 56px;
+      right: 52px;
+    }
+
+    .logo img {
+      height: 38px;
+      width: auto;
+      opacity: 0.80;
+    }
+
+    /* RIGHT SIDE — Rotated brand text (within safe zone) */
+    .brand-vertical {
+      position: absolute;
+      right: -110px;
+      top: 50%;
+      transform: translateY(-50%) rotate(90deg);
+      font-size: 20px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.30);
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="photo-bg"></div>
+  <div class="overlay"></div>
+
+  <div class="safe-zone">
+    <!-- Top left tag -->
+    <div class="tag-topleft">
+      SAÚDE<br>&amp; BEM-ESTAR
+    </div>
+
+    <!-- Top right dots -->
+    <div class="dots-topright">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+
+    <!-- Main title -->
+    <div class="main-title">
+      DE 30 DIAS<br>
+      EM 30 HORAS,<br>
+      VASCULARCARE
+    </div>
+
+    <!-- Bullets -->
+    <div class="bullets">
+      <div class="bullet-item"><div class="bullet-dot"></div>100% LASER</div>
+      <div class="bullet-item"><div class="bullet-dot"></div>SEM REPOUSO</div>
+      <div class="bullet-item"><div class="bullet-dot"></div>SUA ROTINA PLENA</div>
+    </div>
+
+    <!-- Vertical brand text -->
+    <div class="brand-vertical">DNA VASCULARCARE.</div>
+
+    <!-- Logo bottom right -->
+    <div class="logo">
+      <img src="logo.png" alt="VascularCare">
+    </div>
+  </div>
+</body>
+</html>

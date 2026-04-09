@@ -1,0 +1,39 @@
+squad:
+  code: "capas-reels-vascular"
+  name: "Capas Reels — Vascular Care"
+  description: "Recebe foto + tema, gera título e subtítulo com autoridade médica, e monta a capa 1080×1920 com identidade visual da Vascular Care."
+  language: "pt-BR"
+  created: "2026-04-08"
+
+agents:
+  - id: "capas-reels-vascular/agents/camila-copy"
+    file: "./agents/camila-copy.agent.md"
+  - id: "capas-reels-vascular/agents/diego-display"
+    file: "./agents/diego-display.agent.md"
+  - id: "capas-reels-vascular/agents/rafael-revisao"
+    file: "./agents/rafael-revisao.agent.md"
+
+pipeline:
+  file: "./pipeline/pipeline.yaml"
+
+skills:
+  - web_search
+  - web_fetch
+  - image-creator
+  - template-designer
+
+data:
+  - pipeline/data/research-brief.md
+  - pipeline/data/domain-framework.md
+  - pipeline/data/quality-criteria.md
+  - pipeline/data/output-examples.md
+  - pipeline/data/anti-patterns.md
+  - pipeline/data/tone-of-voice.md
+  - pipeline/data/visual-identity.md
+  - pipeline/data/template-a-reference.html
+  - pipeline/data/template-b-reference.html
+  - pipeline/data/template-c-reference.html
+
+memory:
+  - _memory/memories.md
+  - _memory/runs.md
