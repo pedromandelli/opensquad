@@ -37,10 +37,10 @@ const PHOTOS_FALLBACK = "/Users/pedromandelli/Documents/Vascular Care/Fotos-Regi
 
 // Brand constants — update these to match VascularCare credentials
 const BRAND = {
-  meta:      "RESP. TÉCNICO DR. MARCELO MANDELLI",
-  crmLeft:   "CRM-SP 167971 / RQE 52347",
-  crmRight:  "CRM CNPJ 1019138",
-  name:      "DR. MARCELO MANDELLI",
+  meta:      "RESP. TÉCNICO DR. MARCELO BARBOSA MANDELLI",
+  crmLeft:   "CRM-SC 7208 / RQE 3006",
+  crmRight:  "©VASCULARCARE 2026",
+  name:      "DR. MARCELO BARBOSA MANDELLI",
   copyright: "©VASCULARCARE 2026",
 };
 
@@ -484,8 +484,8 @@ function bulletPhotoSlide(slide, photo) {
     .map(
       (item) => `
     <li style="display:flex;align-items:flex-start;gap:22px;margin-bottom:20px;">
-      <span style="color:${C.coral};font-size:30px;line-height:1.4;
-        flex-shrink:0;margin-top:4px;">•</span>
+      <div style="width:14px;height:14px;border-radius:50%;background:${C.coral};
+        flex-shrink:0;margin-top:14px;"></div>
       <span style="font-family:'Montserrat',sans-serif;font-size:34px;font-weight:400;
         color:rgba(255,255,255,0.88);line-height:1.38;">
         ${parseBold(item, "#FFFFFF")}

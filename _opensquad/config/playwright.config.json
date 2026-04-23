@@ -5,7 +5,7 @@
     "userDataDir": "_opensquad/_browser_profile",
     "launchOptions": {
       "headless": true,
-      "channel": "chrome"
+      "executablePath": "/home/dell/.cache/ms-playwright/chromium-1217/chrome-linux64/chrome"
     }
   }
 }

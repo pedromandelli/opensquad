@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -m http.server 8767 --directory squads/carrossel-vascular/output/2026-04-14-000001/slides)",
+      "Bash(curl -s http://localhost:8767/slide-06.html)",
+      "Bash(pkill -f \"http.server 8767\")",
+      "Bash(node -e ':*)",
+      "Bash(node squads/carrossel-vascular/output/2026-04-14-000001/slides/_fix-slide06.mjs)",
+      "Bash(sed -i 's/Sem cortes amplos\\\\.<br>Sem retirada\\\\. Recuperação tranquila\\\\./Sem cortes amplos.<br>Sem retirada.<br>Recuperação tranquila./' squads/carrossel-vascular/output/2026-04-14-000001/slides/slide-06.html)",
+      "Bash(sed -i 's/font-size:46px;font-weight:800/font-size:50px;font-weight:800/' squads/carrossel-vascular/output/2026-04-14-000001/slides/slide-06.html)",
+      "Bash(node squads/carrossel-vascular/output/2026-04-14-000001/slides/_rerender.mjs)"
+    ]
+  }
+}
