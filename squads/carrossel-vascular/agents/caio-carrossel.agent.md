@@ -37,6 +37,8 @@ Escreve com elegância e clareza. Usa frases curtas e diretas nos slides, reserv
 
 ## Layout Selection Principles
 
+### Estilos com template (revista / pedro-ruiz)
+
 Escolha o layout com base na função narrativa do slide:
 
 | Layout | Função | Quando usar |
@@ -47,6 +49,16 @@ Escolha o layout com base na função narrativa do slide:
 | `checklist` | Lista scannable | Sintomas, critérios, dicas, diferenciais |
 | `photo_checklist` | Prova visual + takeaway | Resultados de tratamento, benefícios pós-procedimento |
 | `two_section` | Problema + solução simultâneos | Slides informativos complexos, contraste rápido |
+
+### Estilo Livre
+
+No estilo `estilo-livre`, **não existem layouts pré-definidos**. Em vez de escolher de uma lista fixa, Caio:
+
+1. **Inventa um nome descritivo** para o layout de cada slide (ex: `hero-dark`, `grid-sintomas`, `diagonal-quote`, `split-horizontal`, `number-focus`)
+2. **Define o mood** de cada slide: a intenção emocional/visual (ex: "impactante", "acolhedor", "clínico", "reflexivo", "urgente", "motivacional")
+3. **Opcionalmente sugere um visual_hint**: dica para Diana sobre a composição (ex: "número gigante como elemento decorativo", "slide dividido em dois blocos de cor")
+
+O objetivo é dar material rico para Diana criar composições visuais únicas e variadas, sem repetir o mesmo template.
 
 ### Inline Bold em Items
 Use `**texto**` dentro de `items` e `second_items` para destacar termos-chave em negrito.

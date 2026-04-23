@@ -25,6 +25,9 @@ Load these files before executing:
 - Se `estilo: pedro-ruiz`:
   - `squads/carrossel-vascular/pipeline/data/visual-identity-pedro-ruiz.md`
 
+- Se `estilo: estilo-livre`:
+  - `squads/carrossel-vascular/pipeline/data/visual-identity-estilo-livre.md`
+
 ## Instructions
 
 ### Process
@@ -34,6 +37,7 @@ Load these files before executing:
 4. Para cada slide, escolha o layout correto de acordo com o estilo:
    - **estilo `revista`**: `cover`, `standard`, `statement`, `checklist`, `photo_checklist`, `two_section`
    - **estilo `pedro-ruiz`**: `cover`, `editorial`, `numbered`, `white-card`, `white-arc`, `bullet-photo`
+   - **estilo `estilo-livre`**: sem layouts pré-definidos — use nomes descritivos livres (ex: `hero-split`, `grid-icons`, `diagonal-quote`, etc.). Cada slide pode ter um layout único inventado por Diana.
 5. Use variação de layouts ao longo do carrossel para criar ritmo visual — evite repetir o mesmo layout mais de 3 vezes seguidas.
 6. Escreva o roteiro slide a slide com todos os campos obrigatórios para o layout escolhido (ver Output Format abaixo — use o formato do estilo correto).
 7. Inclua `estilo: <valor>` no cabeçalho do roteiro.
@@ -198,6 +202,73 @@ slides:
       - "**Entende** o diagnóstico com clareza"
       - "Escolhe um **especialista** de referência"
       - "Age com **segurança**"
+
+caption:
+  hook: "..."
+  body: |
+    ...
+  closing_question: "..."
+
+hashtags: "#tag1 #tag2 #tag3 ..."
+```
+
+### Layout Guide — estilo `estilo-livre`
+
+No estilo livre, **não existem layouts pré-definidos**. O Caio descreve o conteúdo e a intenção de cada slide, e a Diana inventa a composição visual.
+
+| Campo | Obrigatório | Descrição |
+|-------|-------------|-----------|
+| `layout` | Sim | Nome descritivo livre (ex: `hero-dark`, `split-horizontal`, `number-focus`) |
+| `mood` | Sim | Intenção visual/emocional (ex: "impactante", "acolhedor", "dados", "reflexivo") |
+| `headline` | Sim | Título principal do slide |
+| `supporting_text` | Não | Texto de apoio |
+| `items` | Não | Lista de itens (quando aplicável) |
+| `visual_hint` | Não | Sugestão visual para Diana (ex: "número grande como elemento decorativo", "dividir slide em dois blocos") |
+
+### Formato para `estilo: estilo-livre`
+
+```
+estilo: "estilo-livre"
+formato: "<nome do formato escolhido>"
+tom: "<tom de voz escolhido>"
+total_slides: <numero>
+
+slides:
+  - slide: 1
+    tipo: "cover"
+    layout: "<nome descritivo livre>"
+    mood: "impactante"
+    headline: "..."
+    supporting_text: "..."
+    visual_hint: "<sugestão opcional para Diana>"
+    word_count: <numero>
+
+  - slide: 2
+    tipo: "contexto"
+    layout: "<nome descritivo livre>"
+    mood: "acolhedor"
+    headline: "..."
+    supporting_text: "..."
+    word_count: <numero>
+
+  - slide: 3
+    tipo: "lista"
+    layout: "<nome descritivo livre>"
+    mood: "informativo"
+    headline: "..."
+    items:
+      - "**Termo chave** descrição"
+      - "**Outro termo** descrição"
+    word_count: <numero>
+
+  - slide: N
+    tipo: "cta"
+    layout: "<nome descritivo livre>"
+    mood: "motivacional"
+    headline: "..."
+    supporting_text: "..."
+    cta_action: "..."
+    word_count: <numero>
 
 caption:
   hook: "..."

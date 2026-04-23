@@ -22,27 +22,6 @@
       /* RUNTIME: background-image: url('{FOTO_PATH}'); background-size: cover; background-position: center top; */
     }
 
-    /* Subtle blue glow */
-    .texture {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 70% 15%, rgba(59,130,246,0.07) 0%, transparent 55%);
-    }
-
-    /* Gradient overlay — heavier at bottom of safe zone */
-    .overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom,
-        rgba(0,0,0,0) 0%,
-        rgba(0,0,0,0.05) 30%,
-        rgba(0,0,0,0.55) 52%,
-        rgba(0,0,0,0.90) 68%,
-        rgba(0,0,0,0.97) 75%,
-        rgba(0,0,0,0.97) 100%
-      );
-    }
-
     /* SAFE ZONE — all elements live here (1080 x 1350) */
     .safe-zone {
       position: absolute;
@@ -98,8 +77,6 @@
 </head>
 <body>
   <div class="photo-bg"></div>
-  <div class="texture"></div>
-  <div class="overlay"></div>
 
   <div class="safe-zone">
     <div class="content">

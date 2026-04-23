@@ -24,3 +24,13 @@ squads/*/_build/*.jpg
 
 # Playwright local logs and screenshots
 .playwright-mcp/
+
+# Photos e referências visuais locais (cada membro da equipe configura as suas)
+squads/*/pipeline/data/photos/*.jpg
+squads/*/pipeline/data/photos/*.jpeg
+squads/*/pipeline/data/photos/*.png
+squads/*/pipeline/data/photos/*.webp
+squads/*/pipeline/data/references/*.jpg
+squads/*/pipeline/data/references/*.jpeg
+squads/*/pipeline/data/references/*.png
+squads/*/pipeline/data/references/*.webp
